@@ -64,9 +64,11 @@ function Window({ start, end }) {
   )
 }
 
+const pattern = 'sliding-window'
+
 export default function SlidingWindowPage({ files }) {
   return (
-    <Pattern name="Sliding Window" pattern="sliding-window" files={files}>
+    <Pattern name="Sliding Window" pattern={pattern} files={files}>
       <SlidingWindow />
     </Pattern>
   )
@@ -75,7 +77,7 @@ export default function SlidingWindowPage({ files }) {
 export async function getStaticProps() {
   return {
     props: {
-      files: getAlgorithms('sliding-window'),
+      files: getAlgorithms(pattern),
     },
   }
 }
