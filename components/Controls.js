@@ -13,7 +13,8 @@ export function Controls({
       <select
         className="bg-gray-200 p-2 rounded-md font-semibold"
         value={algorithm}
-        onBlur={(evt) => {
+        onBlur={() => {}}
+        onChange={(evt) => {
           onSelect(evt.target.value)
           reset()
         }}
