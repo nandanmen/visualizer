@@ -18,7 +18,7 @@ const variants = {
 }
 
 export default function TwoPointersPage() {
-  const [args, setArgs] = useState([[1, 2, 3, 4, 6, 9, 12], 8])
+  const [args] = useState([[1, 2, 3, 4, 6, 9, 12], 8])
   const { state, steps, isPlaying, toggle, reset } = useAlgorithm(
     findPairWithSum,
     args
