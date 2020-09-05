@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { getAlgorithms } from '../../lib/algorithm'
 import { Iterable, IterableItem } from '../../components/Iterable'
-import { Controls } from '../../components/Controls'
-import { PatternLayout } from '../../components/PatternLayout'
-import { Loading } from '../../components/Loading'
-import { useAlgorithm } from '../../lib/useAlgorithm'
-import { useImplementation } from '../../lib/useImplementation'
+import { Pattern, usePatternContext } from '../../components/Pattern'
 
 const variants = {
   active: {
@@ -20,67 +16,38 @@ const variants = {
   },
 }
 
-const title = 'Sliding Window'
-
-export default function SlidingWindowPage({ files }) {
-  const algorithms = useImplementation('sliding-window', files)
-
-  const [activeAlgorithm, setActiveAlgorithm] = useState(files[0])
-  const [args, setArgs] = useState(null)
-
-  const func = algorithms && algorithms[activeAlgorithm]
-  const { state, steps, isPlaying, toggle, reset } = useAlgorithm(func, args)
-
-  useEffect(() => {
-    if (func && typeof func === 'function') {
-      setArgs(func.__defaultInput)
-    }
-  }, [func])
-
-  if (steps.length > 0) {
-    const [input] = args
-    const { done, start, end } = state
-    const isActive = (index) => (done ? true : index >= start && index <= end)
-
-    return (
-      <PatternLayout name={title}>
-        <Controls
-          algorithms={algorithms}
-          activeAlgorithm={activeAlgorithm}
-          isPlaying={isPlaying}
-          toggle={toggle}
-          reset={reset}
-          onSelect={setActiveAlgorithm}
-        />
-        <section className="w-full mt-16 flex flex-col items-center">
-          <Iterable>
-            {Array.from(input).map((item, index) => (
-              <IterableItem
-                variants={variants}
-                key={`${activeAlgorithm}-${item}-${index}`}
-                animate={isActive(index) ? 'active' : 'inactive'}
-                className={{
-                  result: done,
-                }}
-              >
-                {item}
-              </IterableItem>
-            ))}
-            <AnimatePresence>
-              {!done && <Window start={start} end={end} />}
-            </AnimatePresence>
-          </Iterable>
-          <section className="mt-16">
-            <code className="block">
-              Iteration: {steps.indexOf(state) + 1} / {steps.length}
-            </code>
-          </section>
-        </section>
-      </PatternLayout>
-    )
-  }
-
-  return <Loading />
+function SlidingWindow() {
+  const { models } = usePatternContext()
+  const { activeAlgorithm, args, state, steps } = models
+  const [input] = args
+  const { done, start, end } = state
+  const isActive = (index) => (done ? true : index >= start && index <= end)
+  return (
+    <>
+      <Iterable>
+        {Array.from(input).map((item, index) => (
+          <IterableItem
+            variants={variants}
+            key={`${activeAlgorithm}-${item}-${index}`}
+            animate={isActive(index) ? 'active' : 'inactive'}
+            className={{
+              result: done,
+            }}
+          >
+            {item}
+          </IterableItem>
+        ))}
+        <AnimatePresence>
+          {!done && <Window start={start} end={end} />}
+        </AnimatePresence>
+      </Iterable>
+      <section className="mt-16">
+        <code className="block">
+          Iteration: {steps.indexOf(state) + 1} / {steps.length}
+        </code>
+      </section>
+    </>
+  )
 }
 
 function Window({ start, end }) {
@@ -94,6 +61,14 @@ function Window({ start, end }) {
       className="border-black border-4 h-32 absolute rounded-lg"
       layout
     />
+  )
+}
+
+export default function SlidingWindowPage({ files }) {
+  return (
+    <Pattern name="Sliding Window" pattern="sliding-window" files={files}>
+      <SlidingWindow />
+    </Pattern>
   )
 }
 
