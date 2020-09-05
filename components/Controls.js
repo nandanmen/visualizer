@@ -1,8 +1,8 @@
 import React from 'react'
 
 export function Controls({
-  options,
-  algorithm,
+  algorithms,
+  activeAlgorithm,
   onSelect,
   isPlaying,
   toggle,
@@ -12,15 +12,15 @@ export function Controls({
     <div className="w-full mb-8 flex">
       <select
         className="bg-gray-200 p-2 rounded-md font-semibold"
-        value={algorithm}
+        value={activeAlgorithm}
         onBlur={() => {}}
         onChange={(evt) => {
           onSelect(evt.target.value)
           reset()
         }}
       >
-        {options.map((alg) => (
-          <option value={alg.__vizName} key={alg.__vizName}>
+        {Object.entries(algorithms).map(([path, alg]) => (
+          <option value={path} key={path}>
             {alg.__vizName}
           </option>
         ))}

@@ -16,6 +16,7 @@ module.exports = {
     browser: true, // Enables browser globals like window and document
     amd: true, // Enables require() and define() as global variables as per the amd spec.
     node: true, // Enables Node.js global variables and Node.js scoping.
+    es6: true,
   },
   extends: [
     'eslint:recommended',
@@ -27,4 +28,4 @@ module.exports = {
     'react/prop-types': 'off',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
   },
-};
+}
