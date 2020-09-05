@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { BiUpArrow } from 'react-icons/bi'
 
 import findPairWithSum from '../../algorithms/two-pointers/pair-sum'
-import { Iterable, IterableItem } from '../../components/IterableAlt'
+import { Iterable, IterableItem } from '../../components/Iterable'
 import { Controls } from '../../components/Controls'
 import { Layout } from '../../components/Layout'
+import { PatternLayout } from '../../components/PatternLayout'
 import { useAlgorithm } from '../../lib/useAlgorithm'
 
 const variants = {
@@ -35,9 +35,7 @@ export default function TwoPointersPage() {
   const showArrow = (index) => (done ? false : isActive(index))
 
   return (
-    <Layout title="Two Pointers">
-      <Link href="/">Home</Link>
-      <h1 className="text-3xl font-semibold mb-4">Two Pointers</h1>
+    <PatternLayout name="Two Pointers">
       <Controls
         algorithms={{ findPairWithSum }}
         activeAlgorithm="findPairWithSum"
@@ -77,6 +75,6 @@ export default function TwoPointersPage() {
           {notFound && <code className="block">Not found :(</code>}
         </section>
       </section>
-    </Layout>
+    </PatternLayout>
   )
 }

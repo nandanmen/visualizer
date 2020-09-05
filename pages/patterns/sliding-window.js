@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { getAlgorithms } from '../../lib/algorithm'
-import { Iterable, IterableItem } from '../../components/IterableAlt'
+import { Iterable, IterableItem } from '../../components/Iterable'
 import { Controls } from '../../components/Controls'
+import { PatternLayout } from '../../components/PatternLayout'
 import { Layout } from '../../components/Layout'
 import { useAlgorithm } from '../../lib/useAlgorithm'
 import { useImplementation } from '../../lib/useImplementation'
@@ -43,9 +43,7 @@ export default function SlidingWindowPage({ files }) {
     const isActive = (index) => (done ? true : index >= start && index <= end)
 
     return (
-      <Layout title={title}>
-        <Link href="/">Home</Link>
-        <h1 className="text-3xl font-semibold mb-4">{title}</h1>
+      <PatternLayout name={title}>
         <Controls
           algorithms={algorithms}
           activeAlgorithm={activeAlgorithm}
@@ -78,7 +76,7 @@ export default function SlidingWindowPage({ files }) {
             </code>
           </section>
         </section>
-      </Layout>
+      </PatternLayout>
     )
   }
 
@@ -94,9 +92,9 @@ function Window({ start, end }) {
   return (
     <motion.div
       style={{ width: `${windowSize * 4}rem`, left: `${start * 4}rem` }}
-      initial={{ opacity: 0, x: -500 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 500 }}
+      initial={{ opacity: 0, y: -80 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 80 }}
       className="border-black border-4 h-32 absolute rounded-lg"
       layout
     />

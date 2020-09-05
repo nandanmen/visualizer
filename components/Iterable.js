@@ -1,32 +1,21 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import clsx from 'clsx'
 
-const variants = {
-  active: {
-    opacity: 1,
-    y: 0,
-  },
-  disabled: {
-    opacity: 0.2,
-    y: 10,
-  },
+export function Iterable({ children }) {
+  return <div className="flex items-center relative">{children}</div>
 }
 
-export function Iterable({ activeIndices, data, children }) {
-  const dataAsArr = [...data]
+export function IterableItem({ children, className, ...motionProps }) {
   return (
-    <div className="flex items-center relative">
-      {dataAsArr.map((item, i) => (
-        <motion.div
-          variants={variants}
-          animate={activeIndices.includes(i) ? 'active' : 'disabled'}
-          className="w-16 h-16 bg-blue-500 text-white flex items-center justify-center text-xl"
-          key={i}
-        >
-          {item}
-        </motion.div>
-      ))}
+    <motion.div
+      className={clsx(
+        'w-16 h-16 bg-blue-500 text-white flex items-center justify-center text-xl',
+        className
+      )}
+      {...motionProps}
+    >
       {children}
-    </div>
+    </motion.div>
   )
 }
