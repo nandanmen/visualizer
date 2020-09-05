@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { getAlgorithms } from '../../lib/algorithm'
@@ -43,6 +44,7 @@ export default function SlidingWindowPage({ files }) {
 
     return (
       <Layout title={title}>
+        <Link href="/">Home</Link>
         <h1 className="text-3xl font-semibold mb-4">{title}</h1>
         <Controls
           algorithms={algorithms}

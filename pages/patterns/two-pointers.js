@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { BiUpArrow } from 'react-icons/bi'
 
 import findPairWithSum from '../../algorithms/two-pointers/pair-sum'
@@ -35,6 +36,7 @@ export default function TwoPointersPage() {
 
   return (
     <Layout title="Two Pointers">
+      <Link href="/">Home</Link>
       <h1 className="text-3xl font-semibold mb-4">Two Pointers</h1>
       <Controls
         algorithms={{ findPairWithSum }}
