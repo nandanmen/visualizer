@@ -37,3 +37,7 @@ img {
 .not-found {
   @apply bg-red-600;
 }
+
+.arrow-down {
+  bottom: -1em;
+}

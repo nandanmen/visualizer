@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { BiUpArrow } from 'react-icons/bi'
 
 import findPairWithSum from '../../algorithms/two-pointers/pair-sum'
 import { Iterable, IterableItem } from '../../components/IterableAlt'
@@ -16,19 +17,20 @@ const variants = {
   },
 }
 
-const args = [[1, 2, 3, 4, 6, 9, 12], 7]
-const [input, target] = args
-
 export default function TwoPointersPage() {
+  const [args, setArgs] = useState([[1, 2, 3, 4, 6, 9, 12], 8])
   const { state, steps, isPlaying, toggle, reset } = useAlgorithm(
     findPairWithSum,
     args
   )
+
+  const [input, target] = args
   const { done, head, tail, result } = state
   const isResult = (index) => (done && result ? result.includes(index) : false)
   const notFound = done && result === null
   const isActive = (index) =>
     notFound || isResult(index) || index === head || index === tail
+  const showArrow = (index) => (done ? false : isActive(index))
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
@@ -44,21 +46,25 @@ export default function TwoPointersPage() {
         <section className="w-full flex flex-col items-center">
           <Iterable>
             {input.map((item, index) => (
-              <div className="relative" key={item}>
-                <IterableItem
-                  variants={variants}
-                  animate={isActive(index) ? 'active' : 'inactive'}
-                  className={
-                    isResult(index)
-                      ? 'result'
-                      : notFound
-                      ? 'not-found'
-                      : undefined
-                  }
-                >
-                  {item}
-                </IterableItem>
-              </div>
+              <IterableItem
+                variants={variants}
+                key={item}
+                animate={isActive(index) ? 'active' : 'inactive'}
+                className={[
+                  'relative',
+                  {
+                    result: isResult(index),
+                    'not-found': notFound,
+                  },
+                ]}
+              >
+                {item}
+                {showArrow(index) && (
+                  <div className="arrow-down absolute text-blue-500">
+                    <BiUpArrow />
+                  </div>
+                )}
+              </IterableItem>
             ))}
           </Iterable>
           <section className="mt-8">
