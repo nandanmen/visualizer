@@ -27,5 +27,6 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+    'jsx-a11y/anchor-is-valid': 'off',
   },
 }

@@ -52,7 +52,9 @@ export function Pattern({ name, pattern, files, children }) {
   if (steps.length > 0) {
     return (
       <Layout title={name}>
-        <Link href="/">Home</Link>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
         <Title>{name}</Title>
         <Controls
           algorithms={algorithms}

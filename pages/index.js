@@ -9,10 +9,14 @@ function Home() {
       <h1 className="text-3xl font-semibold mb-4">Patterns</h1>
       <ul>
         <li>
-          <Link href="/patterns/sliding-window">Sliding Window</Link>
+          <Link href="/patterns/sliding-window">
+            <a>Sliding Window</a>
+          </Link>
         </li>
         <li>
-          <Link href="/patterns/two-pointers">Two Pointers</Link>
+          <Link href="/patterns/two-pointers">
+            <a>Two Pointers</a>
+          </Link>
         </li>
       </ul>
     </Layout>
