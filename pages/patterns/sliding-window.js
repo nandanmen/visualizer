@@ -5,7 +5,7 @@ import { getAlgorithms } from '../../lib/algorithm'
 import { Iterable, IterableItem } from '../../components/Iterable'
 import { Controls } from '../../components/Controls'
 import { PatternLayout } from '../../components/PatternLayout'
-import { Layout } from '../../components/Layout'
+import { Loading } from '../../components/Loading'
 import { useAlgorithm } from '../../lib/useAlgorithm'
 import { useImplementation } from '../../lib/useImplementation'
 
@@ -80,11 +80,7 @@ export default function SlidingWindowPage({ files }) {
     )
   }
 
-  return (
-    <Layout title="Loading...">
-      <h1 className="text-3xl font-semibold mb-4">Loading...</h1>
-    </Layout>
-  )
+  return <Loading />
 }
 
 function Window({ start, end }) {
