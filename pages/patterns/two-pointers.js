@@ -19,7 +19,7 @@ const variants = {
 }
 
 export default function TwoPointersPage() {
-  const [args] = useState([[1, 2, 3, 4, 6, 9, 12], 8])
+  const [args] = useState([[1, 2, 3, 4, 6, 9, 12], 21])
   const { state, steps, isPlaying, toggle, reset } = useAlgorithm(
     findPairWithSum,
     args
@@ -37,8 +37,8 @@ export default function TwoPointersPage() {
     <Layout title="Two Pointers">
       <h1 className="text-3xl font-semibold mb-4">Two Pointers</h1>
       <Controls
-        options={[findPairWithSum]}
-        algorithm={findPairWithSum.__vizName}
+        algorithms={{ findPairWithSum }}
+        activeAlgorithm="findPairWithSum"
         isPlaying={isPlaying}
         toggle={toggle}
         reset={reset}

@@ -1,18 +1,21 @@
 import React from 'react'
+import Link from 'next/link'
 
-import algorithms from '../algorithms/sliding-window'
-import { Algorithm } from '../components/Algorithm'
-import { SlidingWindow } from '../screens/SlidingWindow'
+import { Layout } from '../components/Layout'
 
 function Home() {
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <main style={{ minWidth: '50vw' }}>
-        <Algorithm algorithms={algorithms} title="Sliding Window">
-          <SlidingWindow />
-        </Algorithm>
-      </main>
-    </div>
+    <Layout title="Algorithms">
+      <h1 className="text-3xl font-semibold mb-4">Patterns</h1>
+      <ul>
+        <li>
+          <Link href="/patterns/sliding-window">Sliding Window</Link>
+        </li>
+        <li>
+          <Link href="/patterns/two-pointers">Two Pointers</Link>
+        </li>
+      </ul>
+    </Layout>
   )
 }
 
