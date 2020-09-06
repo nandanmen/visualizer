@@ -59,3 +59,7 @@ h1 {
 .visual {
   grid-column: 2 / -2;
 }
+
+.input:not(:last-child) {
+  @apply mr-4;
+}
