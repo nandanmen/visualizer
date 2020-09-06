@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
 import { FaUndoAlt, FaCheck, FaTimes } from 'react-icons/fa'
@@ -19,36 +18,6 @@ const variants = {
     opacity: 1,
     x: 0,
   },
-}
-
-const routes = {
-  'sliding-window': ['find-all-averages', 'non-repeat-substring'],
-  'two-pointers': ['remove-duplicates'],
-}
-
-function Nav() {
-  return (
-    <aside className="fixed ml-16">
-      <nav>
-        <ul>
-          {Object.entries(routes).map(([pattern, algorithms]) => (
-            <li key={pattern}>
-              {pattern}
-              <ul className="ml-4">
-                {algorithms.map((algorithm) => (
-                  <li key={algorithm}>
-                    <Link href={`/patterns/${pattern}/${algorithm}`}>
-                      {algorithm}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </aside>
-  )
 }
 
 export function Algorithm({
@@ -82,7 +51,6 @@ export function Algorithm({
 
   return (
     <Layout title={title}>
-      <Nav />
       <header className="mb-12">
         <p className="text-base text-gray-500">{pattern}</p>
         <h1 className="text-5xl font-semibold">{title}</h1>
