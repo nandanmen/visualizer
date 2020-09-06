@@ -30,6 +30,10 @@ img {
   display: block;
 }
 
+h1 {
+  line-height: 1.2;
+}
+
 .result {
   @apply bg-green-600;
 }
@@ -40,4 +44,22 @@ img {
 
 .arrow-down {
   bottom: -1em;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 8rem 42rem 8rem 1fr;
+  grid-auto-rows: min-content;
+}
+
+.main > * {
+  grid-column: 3 / span 1;
+}
+
+.visual {
+  grid-column: 2 / -2;
+}
+
+.input:not(:last-child) {
+  @apply mr-4;
 }
