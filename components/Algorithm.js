@@ -6,8 +6,8 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import { Button } from '~components/Button'
 import { Layout } from '~components/Layout'
 
-export function Algorithm({ title, pattern, state, children }) {
-  const { actions, models } = state
+export function Algorithm({ title, pattern, context, children }) {
+  const { actions, models } = context
   return (
     <Layout title={title}>
       <header className="mb-16">

@@ -8,13 +8,17 @@ import { useAlgorithm } from '~lib/useAlgorithm'
 
 export default function RemoveDuplicates() {
   const input = [2, 3, 3, 3, 6, 9, 9]
-  const state = useAlgorithm(removeDuplicates, [input])
+  const context = useAlgorithm(removeDuplicates, [input])
 
-  const { done, curr, result } = state.models.state
+  const { done, curr, result } = context.models.state
   const isActive = (index) => index === curr
 
   return (
-    <Algorithm title="Remove Duplicates" pattern="Two Pointers" state={state}>
+    <Algorithm
+      title="Remove Duplicates"
+      pattern="Two Pointers"
+      context={context}
+    >
       <section>
         <Iterable>
           {input.map((item, index) => (
