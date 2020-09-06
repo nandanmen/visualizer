@@ -1,14 +1,14 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 import Link from 'next/link'
 
-import { useAlgorithm } from '../lib/useAlgorithm'
-import { useImplementation } from '../lib/useImplementation'
+import { useAlgorithm } from '~lib/useAlgorithm'
+import { useImplementation } from '~lib/useImplementation'
 import { Controls } from './Controls'
 import { Layout } from './Layout'
 import { Loading } from './Loading'
 import { Title } from './Title'
 
-export const PatternContext = createContext()
+const PatternContext = createContext()
 
 export function usePatternContext() {
   const context = useContext(PatternContext)

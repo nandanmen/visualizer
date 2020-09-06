@@ -1,9 +1,9 @@
 import React from 'react'
 import { BiUpArrow } from 'react-icons/bi'
 
-import { getAlgorithms } from '../../lib/algorithm'
-import { Iterable, IterableItem } from '../../components/Iterable'
-import { Pattern, usePatternContext } from '../../components/Pattern'
+import { getAlgorithms } from '~lib/algorithm'
+import { Iterable, IterableItem } from '~components/Iterable'
+import { Pattern, usePatternContext } from '~components/Pattern'
 
 const variants = {
   active: {

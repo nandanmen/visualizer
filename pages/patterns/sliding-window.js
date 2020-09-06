@@ -1,9 +1,9 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { getAlgorithms } from '../../lib/algorithm'
-import { Iterable, IterableItem } from '../../components/Iterable'
-import { Pattern, usePatternContext } from '../../components/Pattern'
+import { getAlgorithms } from '~lib/algorithm'
+import { Iterable, IterableItem } from '~components/Iterable'
+import { Pattern, usePatternContext } from '~components/Pattern'
 
 const variants = {
   active: {

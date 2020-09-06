@@ -13,7 +13,7 @@
     "date-fns": "^2.11.1",
     "framer-motion": "^2.6.6",
     "gray-matter": "^4.0.2",
-    "next": "9.3.5",
+    "next": "^9.5.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-icons": "^3.11.0",
