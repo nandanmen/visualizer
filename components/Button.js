@@ -1,16 +1,18 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import clsx from 'clsx'
 
-export function Button({ onClick, children, className }) {
+export function Button({ onClick, children, className, ...props }) {
   return (
-    <button
+    <motion.button
       className={clsx(
-        'font-semibold bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center text-gray-800 hover:bg-blue-500 hover:text-white',
+        'font-semibold bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center text-gray-800',
         className
       )}
       onClick={onClick}
+      {...props}
     >
       {children}
-    </button>
+    </motion.button>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion, AnimateSharedLayout } from 'framer-motion'
+import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
 import { FaUndoAlt, FaCheck, FaTimes } from 'react-icons/fa'
 import { RiPencilFill } from 'react-icons/ri'
@@ -8,6 +8,17 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import { Button } from '~components/Button'
 import { Input } from '~components/Input'
 import { Layout } from '~components/Layout'
+
+const variants = {
+  hidden: {
+    opacity: 0,
+    x: -50,
+  },
+  shown: {
+    opacity: 1,
+    x: 0,
+  },
+}
 
 export function Algorithm({
   title,
@@ -58,11 +69,20 @@ export function Algorithm({
         <Button className="mr-2" onClick={() => (editing ? save() : toggle())}>
           {editing ? <FaCheck /> : <RiPencilFill size="1.2em" />}
         </Button>
-        {editing && (
-          <Button onClick={toggle}>
-            <FaTimes />
-          </Button>
-        )}
+        <AnimatePresence>
+          {editing && (
+            <Button
+              onClick={toggle}
+              variants={variants}
+              transition={{ ease: 'easeInOut', duration: 0.2 }}
+              initial="hidden"
+              animate="shown"
+              exit="hidden"
+            >
+              <FaTimes />
+            </Button>
+          )}
+        </AnimatePresence>
         <section className="ml-auto flex items-center">
           <Button onClick={actions.prev}>
             <BiLeftArrowAlt size="1.5em" />
