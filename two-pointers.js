@@ -1,9 +1,9 @@
 import React from 'react'
-import { BiUpArrow } from 'react-icons/bi'
 
-import { getAlgorithms } from '~lib/algorithm'
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Pattern, usePatternContext } from '~components/Pattern'
+import { Pointer } from '~components/Pointer'
+import { getAlgorithms } from '~lib/algorithm'
 
 const variants = {
   active: {
@@ -53,11 +53,7 @@ function TwoPointers() {
             ]}
           >
             {item}
-            {showArrow(index) && (
-              <div className="arrow-down absolute text-blue-500">
-                <BiUpArrow />
-              </div>
-            )}
+            {showArrow(index) && <Pointer />}
           </IterableItem>
         ))}
       </Iterable>
