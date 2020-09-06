@@ -29,6 +29,7 @@ export function IterableItem({ children, className, ...motionProps }) {
         'w-16 h-16 bg-blue-500 text-white flex items-center justify-center text-xl',
         className
       )}
+      layout
       {...motionProps}
     >
       {children}
