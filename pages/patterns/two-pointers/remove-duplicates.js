@@ -70,5 +70,10 @@ function removeDuplicates({ record }, { arr }) {
     })
   }
 
+  record({
+    done: true,
+    result: [...result],
+  })
+
   return result
 }

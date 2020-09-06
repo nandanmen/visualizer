@@ -16,7 +16,7 @@ export default function FindAllAverages() {
 
   const { done, start, end, result } = context.models.state
   const { arr, k } = context.models.inputs
-  const isActive = (index) => index >= start && index <= end
+  const isActive = (index) => (done ? true : index >= start && index <= end)
 
   return (
     <Algorithm
@@ -71,5 +71,11 @@ function findAllAverages({ record }, { arr, k }) {
       windowStart++
     }
   }
+
+  record({
+    done: true,
+    result: [...result],
+  })
+
   return result
 }
