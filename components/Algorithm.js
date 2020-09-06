@@ -83,7 +83,7 @@ export function Algorithm({
   return (
     <Layout title={title}>
       <Nav />
-      <header className="mb-16">
+      <header className="mb-12">
         <p className="text-base text-gray-500">{pattern}</p>
         <h1 className="text-5xl font-semibold">{title}</h1>
       </header>

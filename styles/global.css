@@ -48,7 +48,7 @@ h1 {
 
 .main {
   display: grid;
-  grid-template-columns: 1fr 8rem 42rem 8rem 1fr;
+  grid-template-columns: 1fr 2rem 42rem 2rem 1fr;
   grid-auto-rows: min-content;
 }
 
