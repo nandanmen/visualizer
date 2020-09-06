@@ -6,6 +6,7 @@ import { RiPencilFill } from 'react-icons/ri'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 
 import { Button } from '~components/Button'
+import { Input } from '~components/Input'
 import { Layout } from '~components/Layout'
 
 export function Algorithm({
@@ -75,18 +76,16 @@ export function Algorithm({
         </section>
       </section>
       {editing && (
-        <form>
+        <form className="mt-4 flex" onSubmit={save}>
           {Object.entries(inputs).map(([name, value]) => (
-            <label key={name}>
-              {name}
-              <input
-                type="text"
-                value={value}
-                onChange={(evt) =>
-                  setInputs({ ...inputs, [name]: evt.target.value })
-                }
-              />
-            </label>
+            <Input
+              key={name}
+              label={name}
+              value={value}
+              onChange={(evt) =>
+                setInputs({ ...inputs, [name]: evt.target.value })
+              }
+            />
           ))}
         </form>
       )}
