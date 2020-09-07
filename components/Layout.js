@@ -4,7 +4,12 @@ import Link from 'next/link'
 
 const routes = {
   'sliding-window': ['find-all-averages', 'non-repeat-substring'],
-  'two-pointers': ['pair-sum', 'remove-duplicates', 'sorted-squares'],
+  'two-pointers': [
+    'pair-sum',
+    'remove-duplicates',
+    'sorted-squares',
+    'triplet-sum-to-zero',
+  ],
 }
 
 function Nav() {
