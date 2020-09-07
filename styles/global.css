@@ -62,6 +62,10 @@ h1 {
   grid-column: 1 / -2;
 }
 
+.highlight {
+  @apply bg-gray-500;
+}
+
 .input:not(:last-child) {
   @apply mr-4;
 }

@@ -1,10 +1,20 @@
 import React from 'react'
+import clsx from 'clsx'
 import { BiUpArrow } from 'react-icons/bi'
 
-export function Pointer() {
+const variants = {
+  default: 'text-blue-500',
+  highlight: 'text-gray-500',
+}
+
+export function Pointer({ variant = 'default' }) {
   return (
-    <div className="arrow-down absolute text-blue-500">
+    <div className={clsx('arrow-down absolute', variants[variant])}>
       <BiUpArrow />
     </div>
   )
 }
+
+Pointer.variants = Object.fromEntries(
+  Object.entries(variants).map(([key]) => [key, key])
+)

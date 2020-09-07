@@ -30,7 +30,7 @@ export default function TripleSumToZero() {
             <IterableItem
               key={item.id}
               animate={isActive(index) ? 'active' : 'inactive'}
-              className={['rounded-md mr-2', { result: done }]}
+              className={['rounded-md mr-2']}
             >
               {item.val}
               {showPointer(index) && <Pointer />}
@@ -99,6 +99,24 @@ function findAllPairsWithSum({ record }, { nums, target, head }) {
       result.push([head, tail])
       head++
       tail--
+
+      while (head < tail && nums[head].val === nums[head - 1].val) {
+        record({
+          head,
+          tail,
+          done: false,
+        })
+        head++
+      }
+
+      while (head < tail && nums[tail].val === nums[tail + 1].val) {
+        record({
+          head,
+          tail,
+          done: false,
+        })
+        tail--
+      }
     } else if (headNum + tailNum > target) {
       tail--
     } else {
