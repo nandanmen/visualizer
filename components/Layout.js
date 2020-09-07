@@ -9,6 +9,7 @@ const routes = {
     'remove-duplicates',
     'sorted-squares',
     'triplet-sum-to-zero',
+    'closest-triplet',
   ],
 }
 
@@ -43,7 +44,7 @@ export function Layout({ title, children }) {
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="w-full flex pt-24">
+      <div className="w-full flex py-24">
         <Nav />
         <main className="main">{children}</main>
       </div>
