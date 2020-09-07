@@ -40,7 +40,7 @@ export default function ClosestTriples() {
           ))}
         </Iterable>
       </section>
-      <section className="mt-8">
+      <section className="mt-8 text-center">
         <code className="block">Target: {inputs.target}</code>
         <code className="block">Min diff: {minDiff}</code>
         <code className="block">Current diff: {currDiff}</code>
@@ -73,6 +73,12 @@ export function findClosestTriples({ record }, { arr, target }) {
       recordWithNums({ curr: i, head, tail, minDiff, currDiff: diff })
 
       if (diff === 0) {
+        recordWithNums({
+          done: true,
+          triple: [i, head, tail],
+          minDiff: 0,
+          currDiff: diff,
+        })
         return target - diff
       }
 
@@ -95,6 +101,6 @@ export function findClosestTriples({ record }, { arr, target }) {
     }
   }
 
-  recordWithNums({ done: true, triple: minTriple, minDiff })
+  recordWithNums({ done: true, triple: minTriple, minDiff, currDiff: minDiff })
   return target - minDiff
 }
