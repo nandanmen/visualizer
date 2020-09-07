@@ -18,7 +18,7 @@ export default function SortedSquares() {
 
   return (
     <Algorithm title="Sorted Squares" pattern="Two Pointers" context={context}>
-      <section>
+      <section className="mb-4">
         <Iterable>
           {arr.map((item, index) => (
             <IterableItem
@@ -32,23 +32,25 @@ export default function SortedSquares() {
           ))}
         </Iterable>
       </section>
-      <section className="mt-8">
-        <Iterable>
-          <AnimatePresence>
-            {result.map((item) => (
-              <IterableItem
-                key={item.id}
-                animate="active"
-                initial="hidden"
-                exit="hidden"
-                className={['rounded-md mr-2', { result: done }]}
-              >
-                {item.val}
-              </IterableItem>
-            ))}
-          </AnimatePresence>
-        </Iterable>
-      </section>
+      {result.length > 0 && (
+        <section className="mt-4">
+          <Iterable>
+            <AnimatePresence>
+              {result.map((item) => (
+                <IterableItem
+                  key={item.id}
+                  animate="active"
+                  initial="hidden"
+                  exit="hidden"
+                  className={['rounded-md mr-2', { result: done }]}
+                >
+                  {item.val}
+                </IterableItem>
+              ))}
+            </AnimatePresence>
+          </Iterable>
+        </section>
+      )}
     </Algorithm>
   )
 }

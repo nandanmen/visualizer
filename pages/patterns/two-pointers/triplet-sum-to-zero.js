@@ -30,7 +30,7 @@ export default function TripleSumToZero() {
             <IterableItem
               key={item.id}
               animate={isActive(index) ? 'active' : 'inactive'}
-              className={['rounded-md mr-2']}
+              className={['rounded-md mr-2', { result: done }]}
             >
               {item.val}
               {showPointer(index) && <Pointer />}
