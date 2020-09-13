@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Algorithm } from '~components/Algorithm'
-import { Pointer } from '~components/Pointer'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import { addIds } from '~utils/helpers'
 
 const input = [-3, 0, 1, 2, -1, 1, -2]
+const { variants } = IterableItem
 
 export default function TripleSumToZero() {
   const context = useAlgorithm(findTriples, { arr: input })
@@ -29,11 +29,12 @@ export default function TripleSumToZero() {
           {state.input.map((item, index) => (
             <IterableItem
               key={item.id}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={['rounded-md mr-2', { result: done }]}
+              active={isActive(index)}
+              className={{ result: done }}
+              variant={variants.rounded}
+              pointer={showPointer(index)}
             >
               {item.val}
-              {showPointer(index) && <Pointer />}
             </IterableItem>
           ))}
         </Iterable>

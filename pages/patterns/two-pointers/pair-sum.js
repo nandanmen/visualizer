@@ -2,13 +2,13 @@ import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Algorithm } from '~components/Algorithm'
-import { Pointer } from '~components/Pointer'
 import { useAlgorithm } from '~lib/useAlgorithm'
 
 const input = {
   nums: [1, 2, 3, 4, 6],
   target: 6,
 }
+const { variants } = IterableItem
 
 export default function PairSum() {
   const context = useAlgorithm(findPairWithSum, input)
@@ -26,17 +26,15 @@ export default function PairSum() {
           {nums.map((item, index) => (
             <IterableItem
               key={`${item}-${index}`}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={[
-                'rounded-md mr-2',
-                {
-                  'not-found': done && !result,
-                  result: done && result && result.includes(index),
-                },
-              ]}
+              active={isActive(index)}
+              className={{
+                'not-found': done && !result,
+                result: done && result && result.includes(index),
+              }}
+              pointer={showPointer(index)}
+              variant={variants.rounded}
             >
               {item}
-              {showPointer(index) && <Pointer />}
             </IterableItem>
           ))}
         </Iterable>

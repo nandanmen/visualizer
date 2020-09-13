@@ -3,10 +3,10 @@ import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Algorithm } from '~components/Algorithm'
-import { Pointer } from '~components/Pointer'
 import { useAlgorithm } from '~lib/useAlgorithm'
 
 const input = [2, 3, 3, 3, 6, 9, 9]
+const { variants } = IterableItem
 
 export default function RemoveDuplicates() {
   const context = useAlgorithm(removeDuplicates, { arr: input })
@@ -26,11 +26,11 @@ export default function RemoveDuplicates() {
           {arr.map((item, index) => (
             <IterableItem
               key={`${item}-${index}`}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={'rounded-md mr-2'}
+              active={isActive(index)}
+              pointer={isActive(index)}
+              variant={variants.rounded}
             >
               {item}
-              {isActive(index) && <Pointer />}
             </IterableItem>
           ))}
         </Iterable>
@@ -44,7 +44,8 @@ export default function RemoveDuplicates() {
                 animate="active"
                 initial="hidden"
                 exit="hidden"
-                className={['rounded-md mr-2', { result: done }]}
+                className={{ result: done }}
+                variant={variants.rounded}
               >
                 {item}
               </IterableItem>

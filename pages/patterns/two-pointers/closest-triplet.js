@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Algorithm } from '~components/Algorithm'
-import { Pointer } from '~components/Pointer'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import { addIds } from '~utils/helpers'
 
@@ -10,6 +9,7 @@ const args = {
   arr: [1, -3, -1, 2],
   target: 1,
 }
+const { variants } = IterableItem
 
 export default function ClosestTriples() {
   const context = useAlgorithm(findClosestTriples, args)
@@ -28,14 +28,12 @@ export default function ClosestTriples() {
           {state.input.map((item, index) => (
             <IterableItem
               key={item.id}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={[
-                'rounded-md mr-2',
-                { result: done && triple.includes(index) },
-              ]}
+              active={isActive(index)}
+              className={{ result: done && triple.includes(index) }}
+              variant={variants.rounded}
+              pointer={showPointer(index)}
             >
               {item.val}
-              {showPointer(index) && <Pointer />}
             </IterableItem>
           ))}
         </Iterable>

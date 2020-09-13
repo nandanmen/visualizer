@@ -3,11 +3,11 @@ import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Algorithm } from '~components/Algorithm'
-import { Pointer } from '~components/Pointer'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import { addIds } from '~utils/helpers'
 
 const input = [-2, -1, 0, 2, 3]
+const { variants } = IterableItem
 
 export default function SortedSquares() {
   const context = useAlgorithm(sortedSquare, { arr: input })
@@ -23,11 +23,11 @@ export default function SortedSquares() {
           {arr.map((item, index) => (
             <IterableItem
               key={`${item}-${index}`}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={'rounded-md mr-2'}
+              active={isActive(index)}
+              pointer={isActive(index)}
+              variant={variants.rounded}
             >
               {item}
-              {isActive(index) && <Pointer />}
             </IterableItem>
           ))}
         </Iterable>
@@ -42,7 +42,8 @@ export default function SortedSquares() {
                   animate="active"
                   initial="hidden"
                   exit="hidden"
-                  className={['rounded-md mr-2', { result: done }]}
+                  className={{ result: done }}
+                  variant={variants.rounded}
                 >
                   {item.val}
                 </IterableItem>

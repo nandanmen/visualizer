@@ -2,9 +2,10 @@ import React from 'react'
 
 import { Algorithm } from '~components/Algorithm'
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Pointer } from '~components/Pointer'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import { addIds } from '~utils/helpers'
+
+const { variants } = IterableItem
 
 export default function DutchFlagSort() {
   const context = useAlgorithm(dutchFlagSort, { arr: [2, 2, 0, 1, 2, 0] })
@@ -20,11 +21,12 @@ export default function DutchFlagSort() {
           {input.map((item, index) => (
             <IterableItem
               key={item.id}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={['rounded-md mr-2', { result: done }]}
+              active={isActive(index)}
+              className={{ result: done }}
+              variant={variants.rounded}
+              pointer={!done && isActive(index)}
             >
               {item.val}
-              {!done && isActive(index) && <Pointer />}
             </IterableItem>
           ))}
         </Iterable>
