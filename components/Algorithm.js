@@ -20,18 +20,28 @@ const variants = {
   },
 }
 
+function defaultSerializer(key, val) {
+  return [key, JSON.stringify(val)]
+}
+
+function defaultUnserializer(key, val) {
+  return [key, JSON.parse(val)]
+}
+
 export function Algorithm({
   title,
   pattern,
   context: { actions, models },
   children,
+  serialize = defaultSerializer,
+  unserialize = defaultUnserializer,
 }) {
   const [editing, setEditing] = useState(false)
   const [inputs, setInputs] = useState({})
 
   const save = () => {
     const newInputs = Object.fromEntries(
-      Object.entries(inputs).map(([name, value]) => [name, JSON.parse(value)])
+      Object.entries(inputs).map(([name, value]) => unserialize(name, value))
     )
     actions.reset()
     actions.setInputs(newInputs)
@@ -40,10 +50,9 @@ export function Algorithm({
 
   const toggle = () => {
     const editableInputs = Object.fromEntries(
-      Object.entries(models.inputs).map(([name, value]) => [
-        name,
-        JSON.stringify(value),
-      ])
+      Object.entries(models.inputs).map(([name, value]) =>
+        serialize(name, value)
+      )
     )
     setEditing((editing) => !editing)
     setInputs(editableInputs)
