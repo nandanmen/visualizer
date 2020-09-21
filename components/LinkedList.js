@@ -49,7 +49,12 @@ export function LinkedList({ list, activeItems }) {
             {options && options.labels && options.labels.length && (
               <g transform={`translate(${getX(index)}, 30)`}>
                 {options.labels.map((text, index) => (
-                  <text key={text} fontSize={12} y={-index * 15}>
+                  <text
+                    key={text}
+                    fontSize={12}
+                    y={-index * 15}
+                    className="font-mono"
+                  >
                     {text}
                   </text>
                 ))}
