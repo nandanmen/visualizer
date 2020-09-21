@@ -25,7 +25,7 @@ function defaultSerializer(key, val) {
 }
 
 function defaultUnserializer(key, val) {
-  return [key, JSON.parse(val)]
+  return [key, val.length && JSON.parse(val)]
 }
 
 export function Algorithm({

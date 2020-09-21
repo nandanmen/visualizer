@@ -1,38 +1,41 @@
 import React from 'react'
 
 import { Algorithm } from '~components/Algorithm'
+import { LinkedList } from '~components/LinkedList'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import * as List from '~lib/linked-list'
 
-function parseArgs({ list }) {
-  return { list: List.fromArray(list, { cycle: true }) }
+function parseArgs({ list, cycleTo }) {
+  return { list: List.fromArray(list, { cycle: cycleTo }), cycleTo }
 }
 
 function serialize(key, val) {
-  return [key, List.serialize(val)]
-}
-
-function unserialize(key, val) {
-  return [key, List.unserialize(val, { cycle: true })]
+  if (key === 'list') {
+    return [key, List.serialize(val)]
+  }
+  return [key, JSON.stringify(val)]
 }
 
 export default function LinkedListCycle() {
   const context = useAlgorithm(
     hasCycle,
     {
-      list: [1, 2, 3, 4, 5, 6, 3],
+      list: [1, 2, 3, 4, 5, 6],
+      cycleTo: 3,
     },
     parseArgs
   )
-  const { state } = context.models
+  const { state, inputs } = context.models
+
   return (
     <Algorithm
       title="Linked List Cycle"
       pattern={`Fast & Slow Pointers`}
       context={context}
       serialize={serialize}
-      unserialize={unserialize}
-    ></Algorithm>
+    >
+      <LinkedList list={inputs.list} />
+    </Algorithm>
   )
 }
 
