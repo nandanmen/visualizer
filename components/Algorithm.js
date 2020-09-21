@@ -105,18 +105,11 @@ export function Algorithm({
         </section>
       </section>
       {editing && (
-        <form className="mt-4 flex" onSubmit={save}>
-          {Object.entries(inputs).map(([name, value]) => (
-            <Input
-              key={name}
-              label={name}
-              value={value}
-              onChange={(evt) =>
-                setInputs({ ...inputs, [name]: evt.target.value })
-              }
-            />
-          ))}
-        </form>
+        <InputForm
+          inputs={inputs}
+          onSubmit={save}
+          onChange={(evt) => setInputs({ ...inputs, [name]: evt.target.value })}
+        />
       )}
       <AnimateSharedLayout>
         <motion.section
@@ -127,5 +120,15 @@ export function Algorithm({
         </motion.section>
       </AnimateSharedLayout>
     </Layout>
+  )
+}
+
+function InputForm({ inputs, onSubmit, onChange }) {
+  return (
+    <form className="mt-4 flex" onSubmit={onSubmit}>
+      {Object.entries(inputs).map(([name, value]) => (
+        <Input key={name} label={name} value={value} onChange={onChange} />
+      ))}
+    </form>
   )
 }

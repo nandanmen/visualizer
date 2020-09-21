@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 
 import { map, indexOf } from '~lib/linked-list'
 
@@ -14,40 +15,67 @@ const LineWidth = 4
 const BoxRadius = BoxSize / 2
 const ArrowOffset = BoxRadius
 
-export function LinkedList({ list }) {
+const variants = {
+  active: {
+    opacity: 1,
+    y: 0,
+  },
+  inactive: {
+    opacity: 0.2,
+    y: 10,
+  },
+}
+
+export function LinkedList({ list, activeItems }) {
+  const activeSet = activeItems || new Set(map(list, (item) => item.id))
   return (
     <svg className="fill-current w-full flex text-blue-500">
       {map(list, (item, index) => {
         const boxX = (BoxSize + MarginRight) * index
         return (
-          <g key={item.id}>
+          <motion.g
+            key={item.id}
+            variants={variants}
+            initial="inactive"
+            animate={activeSet.has(item.id) ? 'active' : 'inactive'}
+          >
             {item.next && (
               <Arrow
                 from={index}
                 to={item.__isCycle ? indexOf(list, item.next) : index + 1}
               />
             )}
-            <rect
-              width={BoxSize}
-              height={BoxSize}
-              x={boxX}
-              rx={CornerRadius}
-              y={VerticalOffset}
-            />
-            <text
-              x={boxX + BoxRadius}
-              y={VerticalOffset + BoxRadius}
-              className="text-white"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize={FontSize}
-            >
-              {item.value}
-            </text>
-          </g>
+            <g transform={`translate(${boxX}, 0)`}>
+              <LinkedListItem item={item} />
+            </g>
+          </motion.g>
         )
       })}
     </svg>
+  )
+}
+
+function LinkedListItem({ item }) {
+  return (
+    <>
+      <rect
+        width={BoxSize}
+        height={BoxSize}
+        x="0"
+        rx={CornerRadius}
+        y={VerticalOffset}
+      />
+      <text
+        x={BoxRadius}
+        y={VerticalOffset + BoxRadius}
+        className="text-white"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize={FontSize}
+      >
+        {item.value}
+      </text>
+    </>
   )
 }
 
