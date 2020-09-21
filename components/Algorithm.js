@@ -14,18 +14,28 @@ const forms = {
   Settings: 'settings',
 }
 
+function defaultSerializer(key, val) {
+  return [key, JSON.stringify(val)]
+}
+
+function defaultUnserializer(key, val) {
+  return [key, val.length && JSON.parse(val)]
+}
+
 export function Algorithm({
   title,
   pattern,
   context: { actions, models },
   children,
+  serialize = defaultSerializer,
+  unserialize = defaultUnserializer,
 }) {
   const [editing, setEditing] = useState(null)
   const [inputs, setInputs] = useState({})
 
   const save = () => {
     const newInputs = Object.fromEntries(
-      Object.entries(inputs).map(([name, value]) => [name, JSON.parse(value)])
+      Object.entries(inputs).map(([name, value]) => unserialize(name, value))
     )
     actions.reset()
     editing === forms.Inputs
@@ -43,7 +53,11 @@ export function Algorithm({
     const editableInputs = Object.fromEntries(
       Object.entries(
         form === forms.Inputs ? models.inputs : models.settings
-      ).map(([name, value]) => [name, JSON.stringify(value)])
+      ).map(([name, value]) =>
+        form === forms.Inputs
+          ? serialize(name, value)
+          : [name, JSON.stringify(value)]
+      )
     )
     setInputs(editableInputs)
   }

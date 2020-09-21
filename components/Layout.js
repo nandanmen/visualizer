@@ -11,6 +11,7 @@ const routes = {
     'triplet-sum-to-zero',
     'closest-triplet',
   ],
+  'fast-slow-pointers': ['linked-list-cycle'],
 }
 
 function Nav() {
