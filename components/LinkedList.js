@@ -2,15 +2,17 @@ import React from 'react'
 
 import { map, indexOf } from '~lib/linked-list'
 
+// Linked list styling configuration
 const BoxSize = 72
 const CornerRadius = 6
 const MarginRight = 48
 const FontSize = 24
 const VerticalOffset = 0
 const LineSpace = 5
+const TriangleRadius = 6
+const LineWidth = 4
 const BoxRadius = BoxSize / 2
 const ArrowOffset = BoxRadius
-const TriangleRadius = 6
 
 export function LinkedList({ list }) {
   return (
@@ -48,8 +50,6 @@ export function LinkedList({ list }) {
     </svg>
   )
 }
-
-const LineWidth = 4
 
 function Arrow({ from, to }) {
   const startBoxX = (BoxSize + MarginRight) * from
