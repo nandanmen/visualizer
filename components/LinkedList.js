@@ -8,7 +8,7 @@ const BoxSize = 72
 const CornerRadius = 6
 const MarginRight = 48
 const FontSize = 24
-const VerticalOffset = 0
+const VerticalOffset = 40
 const LineSpace = 5
 const TriangleRadius = 6
 const LineWidth = 4
@@ -26,18 +26,19 @@ const variants = {
   },
 }
 
+const getX = (index) => (BoxSize + MarginRight) * index
+
 export function LinkedList({ list, activeItems }) {
-  const activeSet = activeItems || new Set(map(list, (item) => item.id))
   return (
-    <svg className="fill-current w-full flex text-blue-500">
+    <svg className="fill-current w-full flex text-blue-500 svg">
       {map(list, (item, index) => {
-        const boxX = (BoxSize + MarginRight) * index
+        const options = activeItems.get(item.id)
         return (
           <motion.g
             key={item.id}
             variants={variants}
             initial="inactive"
-            animate={activeSet.has(item.id) ? 'active' : 'inactive'}
+            animate={activeItems.has(item.id) ? 'active' : 'inactive'}
           >
             {item.next && (
               <Arrow
@@ -45,8 +46,20 @@ export function LinkedList({ list, activeItems }) {
                 to={item.__isCycle ? indexOf(list, item.next) : index + 1}
               />
             )}
-            <g transform={`translate(${boxX}, 0)`}>
-              <LinkedListItem item={item} />
+            {options && options.labels && options.labels.length && (
+              <g transform={`translate(${getX(index)}, 30)`}>
+                {options.labels.map((text, index) => (
+                  <text key={text} fontSize={12} y={-index * 15}>
+                    {text}
+                  </text>
+                ))}
+              </g>
+            )}
+            <g transform={`translate(${getX(index)}, ${VerticalOffset})`}>
+              <LinkedListItem
+                item={item}
+                variant={options && options.variant}
+              />
             </g>
           </motion.g>
         )
@@ -55,7 +68,7 @@ export function LinkedList({ list, activeItems }) {
   )
 }
 
-function LinkedListItem({ item }) {
+function LinkedListItem({ item, variant }) {
   return (
     <>
       <rect
@@ -63,11 +76,11 @@ function LinkedListItem({ item }) {
         height={BoxSize}
         x="0"
         rx={CornerRadius}
-        y={VerticalOffset}
+        className={variant === 'done' ? 'text-green-600' : ''}
       />
       <text
         x={BoxRadius}
-        y={VerticalOffset + BoxRadius}
+        y={BoxRadius}
         className="text-white"
         textAnchor="middle"
         dominantBaseline="middle"
@@ -87,7 +100,10 @@ function Arrow({ from, to }) {
     const startX = startBoxX + BoxSize + LineSpace
     const endX = endBoxX - LineSpace
     return (
-      <g className="text-gray-600">
+      <g
+        className="text-gray-600"
+        transform={`translate(0, ${VerticalOffset})`}
+      >
         <line
           x1={startX}
           x2={endX - TriangleRadius * 2}

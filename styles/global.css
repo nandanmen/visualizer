@@ -69,3 +69,7 @@ h1 {
 .input:not(:last-child) {
   @apply mr-4;
 }
+
+.svg {
+  min-height: 200px;
+}

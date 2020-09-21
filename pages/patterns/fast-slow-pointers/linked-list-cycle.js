@@ -16,6 +16,20 @@ function serialize(key, val) {
   return [key, JSON.stringify(val)]
 }
 
+const getActiveItems = (state) => {
+  const { fast, slow, done } = state
+  if (done) {
+    return null
+  }
+  if (fast.id === slow.id) {
+    return new Map([[fast.id, { labels: ['slow', 'fast'] }]])
+  }
+  return new Map([
+    [fast.id, { labels: ['fast'] }],
+    [slow.id, { labels: ['slow'] }],
+  ])
+}
+
 export default function LinkedListCycle() {
   const context = useAlgorithm(
     hasCycle,
@@ -26,9 +40,9 @@ export default function LinkedListCycle() {
     parseArgs
   )
   const { state, inputs } = context.models
-
-  const { fast, slow, done } = state
-  const activeItems = !done && new Set([fast.id, slow.id])
+  const activeItems = state.done
+    ? new Map(List.map(inputs.list, (item) => [item.id, { variant: 'done' }]))
+    : getActiveItems(state)
 
   return (
     <Algorithm
@@ -48,10 +62,13 @@ function hasCycle({ record }, { list }) {
 
   while (fast && fast.next) {
     record({ fast, slow })
-    fast = fast.next.next
+    fast = fast.next
+    record({ fast, slow })
+    fast = fast.next
     slow = slow.next
 
     if (fast === slow) {
+      record({ fast, slow })
       record({ done: true, result: true, fast, slow })
       return true
     }
