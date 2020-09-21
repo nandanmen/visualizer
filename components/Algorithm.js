@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion'
+import { motion, AnimateSharedLayout } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
-import { FaUndoAlt, FaCheck, FaTimes } from 'react-icons/fa'
+import { FaUndoAlt, FaCheck, FaTimes, FaCog } from 'react-icons/fa'
 import { RiPencilFill } from 'react-icons/ri'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 
@@ -9,15 +9,9 @@ import { Button } from '~components/Button'
 import { Input } from '~components/Input'
 import { Layout } from '~components/Layout'
 
-const variants = {
-  hidden: {
-    opacity: 0,
-    x: -50,
-  },
-  shown: {
-    opacity: 1,
-    x: 0,
-  },
+const forms = {
+  Inputs: 'inputs',
+  Settings: 'settings',
 }
 
 export function Algorithm({
@@ -26,7 +20,7 @@ export function Algorithm({
   context: { actions, models },
   children,
 }) {
-  const [editing, setEditing] = useState(false)
+  const [editing, setEditing] = useState(null)
   const [inputs, setInputs] = useState({})
 
   const save = () => {
@@ -34,18 +28,23 @@ export function Algorithm({
       Object.entries(inputs).map(([name, value]) => [name, JSON.parse(value)])
     )
     actions.reset()
-    actions.setInputs(newInputs)
-    setEditing(false)
+    editing === forms.Inputs
+      ? actions.setInputs(newInputs)
+      : actions.setSettings(newInputs)
+    setEditing(null)
   }
 
-  const toggle = () => {
+  const toggle = (form) => {
+    if (editing === null) {
+      setEditing(form)
+    } else {
+      setEditing(null)
+    }
     const editableInputs = Object.fromEntries(
-      Object.entries(models.inputs).map(([name, value]) => [
-        name,
-        JSON.stringify(value),
-      ])
+      Object.entries(
+        form === forms.Inputs ? models.inputs : models.settings
+      ).map(([name, value]) => [name, JSON.stringify(value)])
     )
-    setEditing((editing) => !editing)
     setInputs(editableInputs)
   }
 
@@ -66,23 +65,18 @@ export function Algorithm({
         <Button className="mr-2" onClick={actions.reset}>
           <FaUndoAlt />
         </Button>
-        <Button className="mr-2" onClick={() => (editing ? save() : toggle())}>
+        <Button
+          className="mr-2"
+          onClick={() => (editing ? save() : toggle(forms.Inputs))}
+        >
           {editing ? <FaCheck /> : <RiPencilFill size="1.2em" />}
         </Button>
-        <AnimatePresence>
-          {editing && (
-            <Button
-              onClick={toggle}
-              variants={variants}
-              transition={{ ease: 'easeInOut', duration: 0.2 }}
-              initial="hidden"
-              animate="shown"
-              exit="hidden"
-            >
-              <FaTimes />
-            </Button>
-          )}
-        </AnimatePresence>
+        <Button
+          className="mr-2"
+          onClick={() => (editing ? save() : toggle(forms.Settings))}
+        >
+          {editing ? <FaTimes /> : <FaCog />}
+        </Button>
         <section className="ml-auto flex items-center">
           <Button onClick={actions.prev}>
             <BiLeftArrowAlt size="1.5em" />
@@ -95,7 +89,7 @@ export function Algorithm({
           </Button>
         </section>
       </section>
-      {editing && (
+      {editing !== null && (
         <form className="mt-4 flex" onSubmit={save}>
           {Object.entries(inputs).map(([name, value]) => (
             <Input
