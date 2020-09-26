@@ -11,11 +11,10 @@ import {
   LineWidth,
   ArrowOffset,
 } from './config'
-import { ListContext, ListItemContext } from './List'
+import { ListContext } from './List'
 
-export function ListArrow() {
+export function ListArrow({ item, index }) {
   const { list } = useContext(ListContext)
-  const { item, index } = useContext(ListItemContext)
 
   return item.next ? (
     <Arrow

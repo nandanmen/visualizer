@@ -37,8 +37,7 @@ export default function LinkedListCycle() {
     >
       <LinkedList list={inputs.list}>
         {({ item }) => (
-          <LinkedListItem active={item === fast || item === slow}>
-            <LinkedListItem.Arrow />
+          <LinkedListItem active={done || item === fast || item === slow}>
             <LinkedListItem.Content className={done && 'text-green-600'}>
               {item.value}
             </LinkedListItem.Content>

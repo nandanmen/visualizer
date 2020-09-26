@@ -2,7 +2,6 @@ import React, { createContext } from 'react'
 
 import { map } from '~lib/linked-list'
 import { ListItem, ListItemContent } from './ListItem'
-import { ListArrow } from './ListArrow'
 
 export const ListContext = createContext()
 export const ListItemContext = createContext()
@@ -10,7 +9,6 @@ export const ListItemContext = createContext()
 const defaultChildren = () => {
   return (
     <ListItem active>
-      <ListArrow />
       <ListItemContent />
     </ListItem>
   )

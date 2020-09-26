@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 
 import * as config from './config'
 import { ListItemContext } from './List'
+import { ListArrow } from './ListArrow'
 
 const variants = {
   active: {
@@ -18,6 +19,7 @@ const variants = {
 const getX = (index) => (config.BoxSize + config.MarginRight) * index
 
 export function ListItem({ children, active, ...props }) {
+  const { item, index } = useContext(ListItemContext)
   return (
     <motion.g
       variants={variants}
@@ -25,15 +27,18 @@ export function ListItem({ children, active, ...props }) {
       animate={active ? 'active' : 'inactive'}
       {...props}
     >
-      {children}
+      <ListArrow item={item} index={index} />
+      <g transform={`translate(${getX(index)}, ${config.VerticalOffset})`}>
+        {children}
+      </g>
     </motion.g>
   )
 }
 
 export function ListItemContent({ className, children }) {
-  const { item, index } = useContext(ListItemContext)
+  const { item } = useContext(ListItemContext)
   return (
-    <g transform={`translate(${getX(index)}, ${config.VerticalOffset})`}>
+    <>
       <rect
         width={config.BoxSize}
         height={config.BoxSize}
@@ -51,6 +56,6 @@ export function ListItemContent({ className, children }) {
       >
         {children || item.value}
       </text>
-    </g>
+    </>
   )
 }
