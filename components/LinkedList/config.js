@@ -1,0 +1,10 @@
+export const BoxSize = 72
+export const CornerRadius = 6
+export const MarginRight = 48
+export const FontSize = 24
+export const VerticalOffset = 40
+export const LineSpace = 5
+export const TriangleRadius = 6
+export const LineWidth = 4
+export const BoxRadius = BoxSize / 2
+export const ArrowOffset = BoxRadius

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Algorithm } from '~components/Algorithm'
-import { LinkedList } from '~components/LinkedList'
+import { LinkedList, LinkedListItem } from '~components/LinkedList'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import * as List from '~lib/linked-list'
 
@@ -16,20 +16,6 @@ function serialize(key, val) {
   return [key, JSON.stringify(val)]
 }
 
-const getActiveItems = (state) => {
-  const { fast, slow, done } = state
-  if (done) {
-    return null
-  }
-  if (fast.id === slow.id) {
-    return new Map([[fast.id, { labels: ['slow', 'fast'] }]])
-  }
-  return new Map([
-    [fast.id, { labels: ['fast'] }],
-    [slow.id, { labels: ['slow'] }],
-  ])
-}
-
 export default function LinkedListCycle() {
   const context = useAlgorithm(
     hasCycle,
@@ -40,9 +26,7 @@ export default function LinkedListCycle() {
     parseArgs
   )
   const { state, inputs } = context.models
-  const activeItems = state.done
-    ? new Map(List.map(inputs.list, (item) => [item.id, { variant: 'done' }]))
-    : getActiveItems(state)
+  const { fast, slow, done } = state
 
   return (
     <Algorithm
@@ -51,7 +35,16 @@ export default function LinkedListCycle() {
       context={context}
       serialize={serialize}
     >
-      <LinkedList list={inputs.list} activeItems={activeItems} />
+      <LinkedList list={inputs.list}>
+        {({ item }) => (
+          <LinkedListItem active={item === fast || item === slow}>
+            <LinkedListItem.Arrow />
+            <LinkedListItem.Content className={done && 'text-green-600'}>
+              {item.value}
+            </LinkedListItem.Content>
+          </LinkedListItem>
+        )}
+      </LinkedList>
     </Algorithm>
   )
 }
