@@ -27,32 +27,31 @@ export default function NonRepeatSubstring() {
   }
 
   return (
-    <Algorithm
-      title="Non-Repeat Substring"
-      pattern="Sliding Window"
-      context={context}
-    >
-      <section className="pt-8">
-        <Iterable>
-          {Array.from(str).map((item, index) => (
-            <IterableItem
-              key={`${item}-${index}`}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={{
-                result: inResult(index),
-              }}
-            >
-              {item}
-            </IterableItem>
-          ))}
-          <AnimatePresence>
-            {!done && <Window start={start} end={end} />}
-          </AnimatePresence>
-        </Iterable>
-      </section>
-      <section className="mt-16">
-        <code className="block">Max size: {maxStr[1] - maxStr[0] + 1}</code>
-      </section>
+    <Algorithm title="Non-Repeat Substring" pattern="Sliding Window">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section className="pt-8">
+          <Iterable>
+            {Array.from(str).map((item, index) => (
+              <IterableItem
+                key={`${item}-${index}`}
+                animate={isActive(index) ? 'active' : 'inactive'}
+                className={{
+                  result: inResult(index),
+                }}
+              >
+                {item}
+              </IterableItem>
+            ))}
+            <AnimatePresence>
+              {!done && <Window start={start} end={end} />}
+            </AnimatePresence>
+          </Iterable>
+        </section>
+        <section className="mt-16">
+          <code className="block">Max size: {maxStr[1] - maxStr[0] + 1}</code>
+        </section>
+      </Algorithm.Display>
     </Algorithm>
   )
 }

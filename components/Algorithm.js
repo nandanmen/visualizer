@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import clsx from 'clsx'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
 import { FaUndoAlt, FaCheck, FaTimes, FaCog } from 'react-icons/fa'
@@ -8,6 +9,20 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import { Button } from '~components/Button'
 import { Input } from '~components/Input'
 import { Layout } from '~components/Layout'
+
+export function Algorithm({ title, pattern, children }) {
+  return (
+    <Layout title={title}>
+      <header className="mb-12">
+        <p className="text-base text-gray-500">{pattern}</p>
+        <h1 className="text-5xl font-semibold">{title}</h1>
+      </header>
+      <AnimateSharedLayout>{children}</AnimateSharedLayout>
+    </Layout>
+  )
+}
+
+// ---
 
 const forms = {
   Inputs: 'inputs',
@@ -22,13 +37,11 @@ function defaultUnserializer(key, val) {
   return [key, val.length && JSON.parse(val)]
 }
 
-export function Algorithm({
-  title,
-  pattern,
+function Controls({
   context: { actions, models },
-  children,
   serialize = defaultSerializer,
   unserialize = defaultUnserializer,
+  className = '',
 }) {
   const [editing, setEditing] = useState(null)
   const [inputs, setInputs] = useState({})
@@ -63,12 +76,8 @@ export function Algorithm({
   }
 
   return (
-    <Layout title={title}>
-      <header className="mb-12">
-        <p className="text-base text-gray-500">{pattern}</p>
-        <h1 className="text-5xl font-semibold">{title}</h1>
-      </header>
-      <section className="flex">
+    <motion.div layout>
+      <motion.section layout className={clsx('flex', className)}>
         <Button className="mr-2" onClick={actions.toggle}>
           {models.isPlaying ? (
             <BsPauseFill size="1.5em" />
@@ -102,9 +111,9 @@ export function Algorithm({
             <BiRightArrowAlt size="1.5em" />
           </Button>
         </section>
-      </section>
+      </motion.section>
       {editing !== null && (
-        <form className="mt-4 flex" onSubmit={save}>
+        <motion.form layout className="mt-4 flex" onSubmit={save}>
           {Object.entries(inputs).map(([name, value]) => (
             <Input
               key={name}
@@ -115,16 +124,29 @@ export function Algorithm({
               }
             />
           ))}
-        </form>
+        </motion.form>
       )}
-      <AnimateSharedLayout>
-        <motion.section
-          className="visual mt-4 p-12 bg-gray-200 rounded-md w-full flex flex-col items-center"
-          layout
-        >
-          {children}
-        </motion.section>
-      </AnimateSharedLayout>
-    </Layout>
+    </motion.div>
   )
 }
+
+// ---
+
+function Display({ children, className = 'mt-4' }) {
+  return (
+    <motion.section
+      className={clsx(
+        'visual p-12 bg-gray-200 rounded-md w-full flex flex-col items-center',
+        className
+      )}
+      layout
+    >
+      {children}
+    </motion.section>
+  )
+}
+
+// ---
+
+Algorithm.Controls = Controls
+Algorithm.Display = Display

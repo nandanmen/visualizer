@@ -10,6 +10,7 @@ const routes = {
     'sorted-squares',
     'triplet-sum-to-zero',
     'closest-triplet',
+    'dutch-flag-sort',
   ],
   'fast-slow-pointers': ['linked-list-cycle'],
 }

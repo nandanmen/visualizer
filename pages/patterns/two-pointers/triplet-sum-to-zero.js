@@ -19,31 +19,30 @@ export default function TripleSumToZero() {
   const showPointer = (index) => !done && !active && isActive(index)
 
   return (
-    <Algorithm
-      title="Triplet Sum to Zero"
-      pattern="Two Pointers"
-      context={context}
-    >
-      <section>
-        <Iterable>
-          {state.input.map((item, index) => (
-            <IterableItem
-              key={item.id}
-              active={isActive(index)}
-              className={{ result: done }}
-              variant={variants.rounded}
-              pointer={showPointer(index)}
-            >
-              {item.val}
-            </IterableItem>
-          ))}
-        </Iterable>
-      </section>
-      {result && result.length > 0 && (
-        <section className="mt-8">
-          <code className="block">{JSON.stringify(result, null, 1)}</code>
+    <Algorithm title="Triplet Sum to Zero" pattern="Two Pointers">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section>
+          <Iterable>
+            {state.input.map((item, index) => (
+              <IterableItem
+                key={item.id}
+                active={isActive(index)}
+                className={{ result: done }}
+                variant={variants.rounded}
+                pointer={showPointer(index)}
+              >
+                {item.val}
+              </IterableItem>
+            ))}
+          </Iterable>
         </section>
-      )}
+        {result && result.length > 0 && (
+          <section className="mt-8">
+            <code className="block">{JSON.stringify(result, null, 1)}</code>
+          </section>
+        )}
+      </Algorithm.Display>
     </Algorithm>
   )
 }

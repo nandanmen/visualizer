@@ -29,21 +29,19 @@ export default function LinkedListCycle() {
   const { fast, slow, done } = state
 
   return (
-    <Algorithm
-      title="Linked List Cycle"
-      pattern={`Fast & Slow Pointers`}
-      context={context}
-      serialize={serialize}
-    >
-      <LinkedList list={inputs.list}>
-        {({ item }) => (
-          <LinkedListItem active={done || item === fast || item === slow}>
-            <LinkedListItem.Content className={done && 'text-green-600'}>
-              {item.value}
-            </LinkedListItem.Content>
-          </LinkedListItem>
-        )}
-      </LinkedList>
+    <Algorithm title="Linked List Cycle" pattern={`Fast & Slow Pointers`}>
+      <Algorithm.Controls context={context} serialize={serialize} />
+      <Algorithm.Display>
+        <LinkedList list={inputs.list}>
+          {({ item }) => (
+            <LinkedListItem active={done || item === fast || item === slow}>
+              <LinkedListItem.Content className={done && 'text-green-600'}>
+                {item.value}
+              </LinkedListItem.Content>
+            </LinkedListItem>
+          )}
+        </LinkedList>
+      </Algorithm.Display>
     </Algorithm>
   )
 }

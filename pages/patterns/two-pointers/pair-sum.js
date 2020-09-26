@@ -20,33 +20,36 @@ export default function PairSum() {
   const showPointer = (index) => (done ? false : isActive(index))
 
   return (
-    <Algorithm title="Pair Sum" pattern="Two Pointers" context={context}>
-      <section>
-        <Iterable>
-          {nums.map((item, index) => (
-            <IterableItem
-              key={`${item}-${index}`}
-              active={isActive(index)}
-              className={{
-                'not-found': done && !result,
-                result: done && result && result.includes(index),
-              }}
-              pointer={showPointer(index)}
-              variant={variants.rounded}
-            >
-              {item}
-            </IterableItem>
-          ))}
-        </Iterable>
-      </section>
-      <section className="mt-8">
-        <code className="block">Target: {target}</code>
-        <code className="block">
-          {done && result === null
-            ? 'Not found :('
-            : `Current sum: ${nums[head] + nums[tail]}`}
-        </code>
-      </section>
+    <Algorithm title="Pair Sum" pattern="Two Pointers">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section>
+          <Iterable>
+            {nums.map((item, index) => (
+              <IterableItem
+                key={`${item}-${index}`}
+                active={isActive(index)}
+                className={{
+                  'not-found': done && !result,
+                  result: done && result && result.includes(index),
+                }}
+                pointer={showPointer(index)}
+                variant={variants.rounded}
+              >
+                {item}
+              </IterableItem>
+            ))}
+          </Iterable>
+        </section>
+        <section className="mt-8">
+          <code className="block">Target: {target}</code>
+          <code className="block">
+            {done && result === null
+              ? 'Not found :('
+              : `Current sum: ${nums[head] + nums[tail]}`}
+          </code>
+        </section>
+      </Algorithm.Display>
     </Algorithm>
   )
 }

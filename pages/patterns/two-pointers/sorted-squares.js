@@ -17,41 +17,44 @@ export default function SortedSquares() {
   const isActive = (index) => index === head || index === tail
 
   return (
-    <Algorithm title="Sorted Squares" pattern="Two Pointers" context={context}>
-      <section className="mb-4">
-        <Iterable>
-          {arr.map((item, index) => (
-            <IterableItem
-              key={`${item}-${index}`}
-              active={isActive(index)}
-              pointer={isActive(index)}
-              variant={variants.rounded}
-            >
-              {item}
-            </IterableItem>
-          ))}
-        </Iterable>
-      </section>
-      {result.length > 0 && (
-        <section className="mt-4">
+    <Algorithm title="Sorted Squares" pattern="Two Pointers">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section className="mb-4">
           <Iterable>
-            <AnimatePresence>
-              {result.map((item) => (
-                <IterableItem
-                  key={item.id}
-                  animate="active"
-                  initial="hidden"
-                  exit="hidden"
-                  className={{ result: done }}
-                  variant={variants.rounded}
-                >
-                  {item.val}
-                </IterableItem>
-              ))}
-            </AnimatePresence>
+            {arr.map((item, index) => (
+              <IterableItem
+                key={`${item}-${index}`}
+                active={isActive(index)}
+                pointer={isActive(index)}
+                variant={variants.rounded}
+              >
+                {item}
+              </IterableItem>
+            ))}
           </Iterable>
         </section>
-      )}
+        {result.length > 0 && (
+          <section className="mt-4">
+            <Iterable>
+              <AnimatePresence>
+                {result.map((item) => (
+                  <IterableItem
+                    key={item.id}
+                    animate="active"
+                    initial="hidden"
+                    exit="hidden"
+                    className={{ result: done }}
+                    variant={variants.rounded}
+                  >
+                    {item.val}
+                  </IterableItem>
+                ))}
+              </AnimatePresence>
+            </Iterable>
+          </section>
+        )}
+      </Algorithm.Display>
     </Algorithm>
   )
 }

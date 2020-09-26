@@ -16,43 +16,42 @@ export default function RemoveDuplicates() {
   const isActive = (index) => index === curr
 
   return (
-    <Algorithm
-      title="Remove Duplicates"
-      pattern="Two Pointers"
-      context={context}
-    >
-      <section>
-        <Iterable>
-          {arr.map((item, index) => (
-            <IterableItem
-              key={`${item}-${index}`}
-              active={isActive(index)}
-              pointer={isActive(index)}
-              variant={variants.rounded}
-            >
-              {item}
-            </IterableItem>
-          ))}
-        </Iterable>
-      </section>
-      <section className="mt-8">
-        <Iterable>
-          <AnimatePresence>
-            {result.map((item, index) => (
+    <Algorithm title="Remove Duplicates" pattern="Two Pointers">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section>
+          <Iterable>
+            {arr.map((item, index) => (
               <IterableItem
                 key={`${item}-${index}`}
-                animate="active"
-                initial="hidden"
-                exit="hidden"
-                className={{ result: done }}
+                active={isActive(index)}
+                pointer={isActive(index)}
                 variant={variants.rounded}
               >
                 {item}
               </IterableItem>
             ))}
-          </AnimatePresence>
-        </Iterable>
-      </section>
+          </Iterable>
+        </section>
+        <section className="mt-8">
+          <Iterable>
+            <AnimatePresence>
+              {result.map((item, index) => (
+                <IterableItem
+                  key={`${item}-${index}`}
+                  animate="active"
+                  initial="hidden"
+                  exit="hidden"
+                  className={{ result: done }}
+                  variant={variants.rounded}
+                >
+                  {item}
+                </IterableItem>
+              ))}
+            </AnimatePresence>
+          </Iterable>
+        </section>
+      </Algorithm.Display>
     </Algorithm>
   )
 }

@@ -22,27 +22,30 @@ export default function ClosestTriples() {
   const showPointer = (index) => !done && !active && isActive(index)
 
   return (
-    <Algorithm title="Closest Triplet" pattern="Two Pointers" context={context}>
-      <section>
-        <Iterable>
-          {state.input.map((item, index) => (
-            <IterableItem
-              key={item.id}
-              active={isActive(index)}
-              className={{ result: done && triple.includes(index) }}
-              variant={variants.rounded}
-              pointer={showPointer(index)}
-            >
-              {item.val}
-            </IterableItem>
-          ))}
-        </Iterable>
-      </section>
-      <section className="mt-8 text-center">
-        <code className="block">Target: {inputs.target}</code>
-        <code className="block">Min diff: {minDiff}</code>
-        <code className="block">Current diff: {currDiff}</code>
-      </section>
+    <Algorithm title="Closest Triplet" pattern="Two Pointers">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section>
+          <Iterable>
+            {state.input.map((item, index) => (
+              <IterableItem
+                key={item.id}
+                active={isActive(index)}
+                className={{ result: done && triple.includes(index) }}
+                variant={variants.rounded}
+                pointer={showPointer(index)}
+              >
+                {item.val}
+              </IterableItem>
+            ))}
+          </Iterable>
+        </section>
+        <section className="mt-8 text-center">
+          <code className="block">Target: {inputs.target}</code>
+          <code className="block">Min diff: {minDiff}</code>
+          <code className="block">Current diff: {currDiff}</code>
+        </section>
+      </Algorithm.Display>
     </Algorithm>
   )
 }

@@ -19,35 +19,34 @@ export default function FindAllAverages() {
   const isActive = (index) => (done ? true : index >= start && index <= end)
 
   return (
-    <Algorithm
-      title="Find All Averages"
-      pattern="Sliding Window"
-      context={context}
-    >
-      <section className="pt-8">
-        <Iterable>
-          {Array.from(arr).map((item, index) => (
-            <IterableItem
-              key={`${item}-${index}`}
-              animate={isActive(index) ? 'active' : 'inactive'}
-              className={{
-                result: done,
-              }}
-            >
-              {item}
-            </IterableItem>
-          ))}
-          <AnimatePresence>
-            {!done && <Window start={start} end={end} />}
-          </AnimatePresence>
-        </Iterable>
-        <section className="mt-16">
-          <code className="block">Subarray size: {k}</code>
-          <code className="block">
-            Result: {JSON.stringify(result.map(Number), null, 2)}
-          </code>
+    <Algorithm title="Find All Averages" pattern="Sliding Window">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section className="pt-8">
+          <Iterable>
+            {Array.from(arr).map((item, index) => (
+              <IterableItem
+                key={`${item}-${index}`}
+                animate={isActive(index) ? 'active' : 'inactive'}
+                className={{
+                  result: done,
+                }}
+              >
+                {item}
+              </IterableItem>
+            ))}
+            <AnimatePresence>
+              {!done && <Window start={start} end={end} />}
+            </AnimatePresence>
+          </Iterable>
+          <section className="mt-16">
+            <code className="block">Subarray size: {k}</code>
+            <code className="block">
+              Result: {JSON.stringify(result.map(Number), null, 2)}
+            </code>
+          </section>
         </section>
-      </section>
+      </Algorithm.Display>
     </Algorithm>
   )
 }

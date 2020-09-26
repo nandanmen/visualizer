@@ -15,29 +15,32 @@ export default function DutchFlagSort() {
   const isActive = (index) => done || [curr, high, low].includes(index)
 
   return (
-    <Algorithm title="Dutch Flag Sort" pattern="Two Pointers" context={context}>
-      <section>
-        <Iterable>
-          {input.map((item, index) => (
-            <IterableItem
-              key={item.id}
-              active={isActive(index)}
-              className={{ result: done }}
-              variant={variants.rounded}
-              pointer={!done && isActive(index)}
-            >
-              {item.val}
-            </IterableItem>
-          ))}
-        </Iterable>
-      </section>
-      {!done && (
-        <section className="mt-8">
-          <span className="mr-2">curr: {curr}</span>
-          <span className="mr-2">high: {high}</span>
-          <span>low: {low}</span>
+    <Algorithm title="Dutch Flag Sort" pattern="Two Pointers">
+      <Algorithm.Controls context={context} />
+      <Algorithm.Display>
+        <section>
+          <Iterable>
+            {input.map((item, index) => (
+              <IterableItem
+                key={item.id}
+                active={isActive(index)}
+                className={{ result: done }}
+                variant={variants.rounded}
+                pointer={!done && isActive(index)}
+              >
+                {item.val}
+              </IterableItem>
+            ))}
+          </Iterable>
         </section>
-      )}
+        {!done && (
+          <section className="mt-8">
+            <span className="mr-2">curr: {curr}</span>
+            <span className="mr-2">high: {high}</span>
+            <span>low: {low}</span>
+          </section>
+        )}
+      </Algorithm.Display>
     </Algorithm>
   )
 }
