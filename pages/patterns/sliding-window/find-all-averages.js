@@ -1,5 +1,4 @@
 import React from 'react'
-import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import { Algorithm } from '~components/Algorithm'
@@ -35,9 +34,7 @@ export default function FindAllAverages() {
                 {item}
               </IterableItem>
             ))}
-            <AnimatePresence>
-              {!done && <Window start={start} end={end} />}
-            </AnimatePresence>
+            <Window show={!done} start={start} end={end} />
           </Iterable>
           <section className="mt-16">
             <code className="block">Subarray size: {k}</code>

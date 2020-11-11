@@ -43,9 +43,7 @@ export default function NonRepeatSubstring() {
                 {item}
               </IterableItem>
             ))}
-            <AnimatePresence>
-              {!done && <Window start={start} end={end} />}
-            </AnimatePresence>
+            <Window show={!done} start={start} end={end} />
           </Iterable>
         </section>
         <section className="mt-16">

@@ -42,7 +42,7 @@ function Nav() {
 
 export function Layout({ title, children }) {
   return (
-    <div>
+    <>
       <Head>
         <title>{title}</title>
       </Head>
@@ -50,6 +50,6 @@ export function Layout({ title, children }) {
         <Nav />
         <main className="main">{children}</main>
       </div>
-    </div>
+    </>
   )
 }

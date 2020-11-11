@@ -35,6 +35,8 @@ export default function LinkedListCycle() {
         <LinkedList list={inputs.list}>
           {({ item }) => (
             <LinkedListItem active={done || item === fast || item === slow}>
+              {item === fast && <text>fast</text>}
+              {item === slow && <text>slow</text>}
               <LinkedListItem.Content className={done && 'text-green-600'}>
                 {item.value}
               </LinkedListItem.Content>
@@ -52,9 +54,7 @@ function hasCycle({ record }, { list }) {
 
   while (fast && fast.next) {
     record({ fast, slow })
-    fast = fast.next
-    record({ fast, slow })
-    fast = fast.next
+    fast = fast.next.next
     slow = slow.next
 
     if (fast === slow) {

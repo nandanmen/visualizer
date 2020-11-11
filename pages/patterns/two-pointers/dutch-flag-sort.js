@@ -1,49 +1,53 @@
 import React from 'react'
 
-import { Algorithm } from '~components/Algorithm'
 import { Iterable, IterableItem } from '~components/Iterable'
-import { useAlgorithm } from '~lib/useAlgorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
 const { variants } = IterableItem
 
-export default function DutchFlagSort() {
-  const context = useAlgorithm(dutchFlagSort, { arr: [2, 2, 0, 1, 2, 0] })
-  const { state } = context.models
+function DutchFlagSort({ state }) {
   const { done, input, curr, high, low } = state
-
   const isActive = (index) => done || [curr, high, low].includes(index)
-
   return (
-    <Algorithm title="Dutch Flag Sort" pattern="Two Pointers">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section>
-          <Iterable>
-            {input.map((item, index) => (
-              <IterableItem
-                key={item.id}
-                active={isActive(index)}
-                className={{ result: done }}
-                variant={variants.rounded}
-                pointer={!done && isActive(index)}
-              >
-                {item.val}
-              </IterableItem>
-            ))}
-          </Iterable>
+    <>
+      <section>
+        <Iterable>
+          {input.map((item, index) => (
+            <IterableItem
+              key={item.id}
+              active={isActive(index)}
+              className={{ result: done }}
+              variant={variants.rounded}
+              pointer={!done && isActive(index)}
+            >
+              {item.val}
+            </IterableItem>
+          ))}
+        </Iterable>
+      </section>
+      {!done && (
+        <section className="mt-8">
+          <span className="mr-2">curr: {curr}</span>
+          <span className="mr-2">high: {high}</span>
+          <span>low: {low}</span>
         </section>
-        {!done && (
-          <section className="mt-8">
-            <span className="mr-2">curr: {curr}</span>
-            <span className="mr-2">high: {high}</span>
-            <span>low: {low}</span>
-          </section>
-        )}
-      </Algorithm.Display>
-    </Algorithm>
+      )}
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Dutch Flag Sort',
+    pattern: 'Two Pointers',
+    algorithm: dutchFlagSort,
+    inputs: { arr: [2, 2, 0, 1, 2, 0] },
+  },
+  DutchFlagSort
+)
+
+// --
 
 function dutchFlagSort({ record }, { arr }) {
   const nums = addIds(arr)
