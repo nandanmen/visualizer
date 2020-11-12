@@ -12,7 +12,7 @@ const routes = {
     'closest-triplet',
     'dutch-flag-sort',
   ],
-  'fast-slow-pointers': ['linked-list-cycle'],
+  //'fast-slow-pointers': ['linked-list-cycle'],
 }
 
 function Nav() {

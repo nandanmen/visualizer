@@ -35,11 +35,11 @@ h1 {
 }
 
 .result {
-  @apply bg-green-600;
+  @apply bg-highlight;
 }
 
 .not-found {
-  @apply bg-red-600;
+  @apply bg-tertiary;
 }
 
 .arrow-down {

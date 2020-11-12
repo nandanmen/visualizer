@@ -3,8 +3,6 @@ import React from 'react'
 import { Iterable, IterableItem } from '~components/Iterable'
 import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 
-const { variants } = IterableItem
-
 function PairSum({ state, inputs }) {
   const { done, head, tail, result } = state
   const { nums, target } = inputs
@@ -25,7 +23,6 @@ function PairSum({ state, inputs }) {
                 result: done && result && result.includes(index),
               }}
               pointer={showPointer(index)}
-              variant={variants.rounded}
             >
               {item}
             </IterableItem>

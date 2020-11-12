@@ -4,8 +4,6 @@ import { Iterable, IterableItem } from '~components/Iterable'
 import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const { variants } = IterableItem
-
 function DutchFlagSort({ state }) {
   const { done, input, curr, high, low } = state
   const isActive = (index) => done || [curr, high, low].includes(index)
@@ -18,7 +16,6 @@ function DutchFlagSort({ state }) {
               key={item.id}
               active={isActive(index)}
               className={{ result: done }}
-              variant={variants.rounded}
               pointer={!done && isActive(index)}
             >
               {item.val}

@@ -4,8 +4,6 @@ import { Iterable, IterableItem } from '~components/Iterable'
 import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const { variants } = IterableItem
-
 function TripleSumToZero({ state }) {
   const { done, active, curr, head, tail, result } = state
 
@@ -22,7 +20,6 @@ function TripleSumToZero({ state }) {
               key={item.id}
               active={isActive(index)}
               className={{ result: done }}
-              variant={variants.rounded}
               pointer={showPointer(index)}
             >
               {item.val}

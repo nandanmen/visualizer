@@ -78,36 +78,42 @@ function Controls({
   return (
     <motion.div layout>
       <motion.section layout className={clsx('flex', className)}>
-        <Button className="mr-2" onClick={actions.toggle}>
+        <Button
+          className="mr-2"
+          onClick={actions.toggle}
+          title="Start animation"
+        >
           {models.isPlaying ? (
             <BsPauseFill size="1.5em" />
           ) : (
             <BsFillPlayFill size="1.5em" />
           )}
         </Button>
-        <Button className="mr-2" onClick={actions.reset}>
+        <Button className="mr-2" onClick={actions.reset} title="Reset">
           <FaUndoAlt />
         </Button>
         <Button
           className="mr-2"
           onClick={() => (editing ? save() : toggle(forms.Inputs))}
+          title={editing ? 'Save' : 'Edit inputs'}
         >
           {editing ? <FaCheck /> : <RiPencilFill size="1.2em" />}
         </Button>
         <Button
           className="mr-2"
           onClick={() => (editing ? save() : toggle(forms.Settings))}
+          title={editing ? 'Cancel' : 'Animation settings'}
         >
           {editing ? <FaTimes /> : <FaCog />}
         </Button>
         <section className="ml-auto flex items-center">
-          <Button onClick={actions.prev}>
+          <Button onClick={actions.prev} title="Previous step">
             <BiLeftArrowAlt size="1.5em" />
           </Button>
           <p className="mx-2 font-mono">
             {models.steps.indexOf(models.state) + 1} / {models.steps.length}
           </p>
-          <Button onClick={actions.next}>
+          <Button onClick={actions.next} title="Next step">
             <BiRightArrowAlt size="1.5em" />
           </Button>
         </section>
@@ -136,7 +142,7 @@ function Display({ children, className = 'mt-4' }) {
   return (
     <motion.section
       className={clsx(
-        'visual p-12 bg-gray-200 rounded-md w-full flex flex-col items-center',
+        'visual p-16 border-4 rounded-md w-full flex flex-col items-center font-mono bg-main border-stroke z-0',
         className
       )}
       layout
