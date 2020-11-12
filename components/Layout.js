@@ -16,12 +16,14 @@ export function Layout({ title, children }) {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
-      <div className={clsx(styles.container, 'w-full flex lg:p-12')}>
+      <div className={clsx(styles.container, 'w-full flex md:p-6 lg:p-12')}>
         <Nav />
         <main
           className={clsx(
             styles.main,
-            'w-full py-12 flex flex-col lg:items-center'
+            'w-full py-12 flex flex-col',
+            'md:items-center md:pt-20',
+            'lg:pt-12'
           )}
         >
           {children}
@@ -46,15 +48,11 @@ const routes = {
 const navVariants = {
   hidden: {
     scaleX: 0,
-    originX: 1,
     scaleY: 0,
-    originY: 1,
   },
   show: {
     scaleX: 1,
-    originX: 1,
     scaleY: 1,
-    originY: 1,
     transition: {
       when: 'beforeChildren',
       staggerChildren: 0.3,
@@ -77,7 +75,8 @@ const itemVariants = {
 }
 
 function Nav() {
-  const showNavButton = useMediaQuery('(max-width: 48rem)')
+  const showNavButton = useMediaQuery('(max-width: 80rem)')
+  const isMed = useMediaQuery('(min-width: 48rem)')
   const [isNavOpen, setIsNavOpen] = useState(!showNavButton)
   const router = useRouter()
 
@@ -101,13 +100,15 @@ function Nav() {
         </button>
       )}
       <motion.aside
+        style={isMed ? { originX: 0, originY: 0 } : { originX: 1, originY: 1 }}
         variants={navVariants}
         animate={isNavOpen ? 'show' : 'hidden'}
         transition={{ type: 'spring', stiffness: 210, damping: 20 }}
         initial="hidden"
         className={clsx(
           styles.nav_container,
-          'fixed p-8 flex-1 border-4 border-stroke rounded-lg bg-white z-40 mt-8 mb-12 mx-8'
+          'fixed p-8 flex-1 border-4 border-stroke rounded-lg bg-white z-40 mt-8 mb-12 mx-8',
+          'md:mt-12'
         )}
       >
         <nav className={styles.nav}>

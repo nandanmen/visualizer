@@ -1,5 +1,7 @@
 .container {
   min-height: 100vh;
+  max-width: 85rem;
+  margin: 0 auto;
 }
 
 .main {
@@ -11,7 +13,16 @@
   }
 
   @media screen and (min-width: 768px) {
-    display: block;
+    > * {
+      width: 100%;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    > section {
+      min-width: 46rem;
+      width: auto;
+    }
   }
 }
 
@@ -24,11 +35,37 @@
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+
+  @media screen and (min-width: 20rem) {
+    width: 16rem;
+    left: auto;
+  }
+
+  @media screen and (min-width: 768px) {
+    right: auto;
+    bottom: auto;
+    left: 0;
+  }
+
+  @media screen and (min-width: 80rem) {
+    position: relative;
+    margin: 0;
+    flex: 1.5;
+    width: auto;
+  }
 }
 
 .nav_button {
   bottom: 1rem;
   right: 1rem;
+
+  @media screen and (min-width: 768px) {
+    left: 1rem;
+    top: 1rem;
+    bottom: auto;
+    right: auto;
+  }
 }
 
 .active {

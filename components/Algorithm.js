@@ -81,7 +81,7 @@ function Controls({
     <motion.div layout className="px-4">
       <motion.section
         layout
-        className={clsx('flex text-xs lg:text-base', className)}
+        className={clsx('flex text-sm lg:text-base', className)}
       >
         <Button
           className="mr-2"
@@ -124,7 +124,7 @@ function Controls({
           >
             <BiLeftArrowAlt size="1.5em" />
           </Button>
-          <p className={clsx(styles.text, 'mx-2 font-mono')}>
+          <p className={clsx(styles.text, 'font-mono')}>
             {models.steps.indexOf(models.state) + 1} / {models.steps.length}
           </p>
           <Button
@@ -163,8 +163,7 @@ function Display({ children, className = 'mt-4' }) {
       className={clsx(
         styles.display,
         'px-4 py-6 text-sm border-t-4 border-b-4 flex flex-col items-start font-mono bg-background border-stroke z-0 overflow-x-scroll',
-        'md:text-base md:border-4',
-        'lg:p-16 lg:rounded-md lg:items-center',
+        'md:text-base md:border-4 md:rounded-md md:p-16 md:items-center md:overflow-x-hidden',
         className
       )}
       layout
