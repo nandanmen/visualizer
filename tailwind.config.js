@@ -7,9 +7,10 @@ const theme1 = {
 }
 
 const theme2 = {
-  stroke: 'black',
+  stroke: '#001858',
   main: '#fffffe',
-  paragraph: '#a7a9be',
+  background: '#f3d2c1',
+  paragraph: '#172c66',
   highlight: '#8bd3dd',
   secondary: '#fef6e4',
   tertiary: '#e53170',
@@ -18,6 +19,9 @@ const theme2 = {
 module.exports = {
   purge: [],
   theme: {
+    fontFamily: {
+      mono: ['SF Mono', 'Menlo', 'monospace'],
+    },
     extend: {
       borderWidth: {
         3: '3px',

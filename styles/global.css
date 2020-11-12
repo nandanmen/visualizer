@@ -4,6 +4,7 @@
 
 html,
 body {
+  @apply text-paragraph;
   padding: 0;
   margin: 0;
   font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
@@ -16,13 +17,25 @@ body {
   box-sizing: border-box;
 }
 
-a {
-  color: #0070f3;
-  text-decoration: none;
+main {
+  flex: 6;
 }
 
-a:hover {
-  text-decoration: underline;
+main > * {
+  width: 42rem;
+}
+
+.display {
+  min-width: 46rem;
+  width: auto;
+}
+
+a.active {
+  @apply text-white bg-stroke;
+}
+
+a.active:hover {
+  @apply bg-stroke;
 }
 
 img {
@@ -46,17 +59,6 @@ h1 {
   bottom: -1em;
 }
 
-.main {
-  display: grid;
-  grid-template-columns: 2rem 42rem 2rem 1fr;
-  grid-auto-rows: min-content;
-  flex: 4;
-}
-
-.main > * {
-  grid-column: 2 / span 1;
-}
-
 .visual {
   grid-column: 1 / -2;
 }
@@ -71,4 +73,8 @@ h1 {
 
 .svg {
   min-height: 200px;
+}
+
+.debug {
+  @apply border-4 border-stroke;
 }

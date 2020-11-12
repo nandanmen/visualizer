@@ -142,7 +142,7 @@ function Display({ children, className = 'mt-4' }) {
   return (
     <motion.section
       className={clsx(
-        'visual p-16 border-4 rounded-md w-full flex flex-col items-center font-mono bg-main border-stroke z-0',
+        'visual p-16 border-4 rounded-md flex flex-col items-center font-mono bg-background border-stroke z-0 display',
         className
       )}
       layout
