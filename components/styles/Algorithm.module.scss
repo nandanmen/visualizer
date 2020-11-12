@@ -1,4 +1,8 @@
 .display {
-  min-width: 46rem;
-  width: auto;
+  width: 100%;
+
+  @media screen and (min-width: 1024px) {
+    min-width: 46rem;
+    width: auto;
+  }
 }

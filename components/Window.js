@@ -1,20 +1,23 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useMediaQuery } from 'beautiful-react-hooks'
 
-const ItemWidth = 4
 const ItemMargin = 0.5
 
 export function Window({ show, start, end }) {
+  const isLarge = useMediaQuery('(min-width: 1024px)')
   const windowSize = end - start + 1
+
+  const itemWidth = isLarge ? 4 : 3
   return (
     <AnimatePresence>
       {show && (
         <motion.div
           style={{
             width: `${
-              windowSize * ItemWidth + (windowSize - 1) * ItemMargin
+              windowSize * itemWidth + (windowSize - 1) * ItemMargin
             }rem`,
-            left: `${start * ItemWidth + start * ItemMargin}rem`,
+            left: `${start * itemWidth + start * ItemMargin}rem`,
           }}
           initial={{ opacity: 0, y: -80 }}
           animate={{ opacity: 1, y: 0 }}

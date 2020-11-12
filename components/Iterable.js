@@ -35,7 +35,7 @@ export function IterableItem({
       variants={variants}
       animate={active ? 'active' : 'inactive'}
       className={clsx(
-        'w-16 h-16 flex items-center border-3 border-stroke text-stroke bg-highlight justify-center text-xl mr-2 rounded-md z-20',
+        'w-12 h-12 lg:w-16 lg:h-16 flex items-center border-3 border-stroke text-stroke bg-highlight justify-center lg:text-xl mr-2 rounded-md z-20',
         { 'z-30': active },
         className
       )}

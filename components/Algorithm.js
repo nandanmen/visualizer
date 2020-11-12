@@ -79,7 +79,10 @@ function Controls({
 
   return (
     <motion.div layout>
-      <motion.section layout className={clsx('flex', className)}>
+      <motion.section
+        layout
+        className={clsx('flex text-xs lg:text-base', className)}
+      >
         <Button
           className="mr-2"
           onClick={actions.toggle}
@@ -145,7 +148,7 @@ function Display({ children, className = 'mt-4' }) {
     <motion.section
       className={clsx(
         styles.display,
-        'p-16 border-4 rounded-md flex flex-col items-center font-mono bg-background border-stroke z-0',
+        'px-4 py-6 text-sm md:text-base lg:p-16 border-4 rounded-md flex flex-col items-start lg:items-center font-mono bg-background border-stroke z-0 overflow-x-scroll',
         className
       )}
       layout

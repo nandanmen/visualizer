@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
@@ -16,7 +16,7 @@ export function Layout({ title, children }) {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
-      <div className={clsx(styles.container, 'w-full flex p-12')}>
+      <div className={clsx(styles.container, 'p-4 w-full flex lg:p-12')}>
         <Nav />
         <main
           className={clsx(
@@ -80,6 +80,13 @@ function Nav() {
   const showNavButton = useMediaQuery('(max-width: 48rem)')
   const [isNavOpen, setIsNavOpen] = useState(!showNavButton)
   const router = useRouter()
+
+  useEffect(() => {
+    if (!showNavButton) {
+      setIsNavOpen(true)
+    }
+  }, [showNavButton])
+
   return (
     <>
       {showNavButton && (
