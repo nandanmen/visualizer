@@ -9,11 +9,10 @@ import { FaBars, FaTimes } from 'react-icons/fa'
 
 import styles from './styles/Layout.module.scss'
 
-export function Layout({ title, children }) {
+export function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>{title}</title>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
       <div className={clsx(styles.container, 'w-full flex md:p-6 lg:p-12')}>
@@ -23,7 +22,7 @@ export function Layout({ title, children }) {
             styles.main,
             'w-full py-12 flex flex-col',
             'md:items-center md:pt-20',
-            'lg:pt-12'
+            'lg:pt-8'
           )}
         >
           {children}

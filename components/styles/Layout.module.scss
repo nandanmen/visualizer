@@ -20,8 +20,12 @@
 
   @media screen and (min-width: 1024px) {
     > section {
-      min-width: 46rem;
+      max-width: 100%;
       width: auto;
+
+      @media screen and (min-width: 1280px) {
+        max-width: calc(100% - 8rem);
+      }
     }
   }
 }

@@ -78,7 +78,7 @@ function Controls({
   }
 
   return (
-    <motion.div layout className="px-4">
+    <motion.div layout className="px-4 xl:px-0">
       <motion.section
         layout
         className={clsx('flex text-sm lg:text-base', className)}
