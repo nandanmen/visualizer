@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
+import styles from './styles/Layout.module.scss'
+
 const routes = {
   'sliding-window': ['find-all-averages', 'non-repeat-substring'],
   'two-pointers': [
@@ -14,7 +16,6 @@ const routes = {
     'closest-triplet',
     'dutch-flag-sort',
   ],
-  //'fast-slow-pointers': ['linked-list-cycle'],
 }
 
 function Nav() {
@@ -24,11 +25,7 @@ function Nav() {
       <nav>
         <ul>
           {Object.entries(routes).map(([pattern, algorithms]) => (
-            <li
-              key={pattern}
-              style={{ textTransform: 'capitalize' }}
-              className="mb-4"
-            >
+            <li key={pattern} className={clsx(styles.link, 'mb-4')}>
               <h1 className="text-lg font-semibold mb-4">
                 {pattern.split('-').join(' ')}
               </h1>
@@ -37,18 +34,20 @@ function Nav() {
                   const href = `/patterns/${pattern}/${algorithm}`
                   const isActive = router.pathname === href
                   return (
-                    <Link href={href} key={algorithm}>
-                      <a
-                        className={clsx(
-                          'block px-4 -mx-4 rounded-md hover:bg-highlight',
-                          {
-                            active: isActive,
-                          }
-                        )}
-                      >
-                        {algorithm.split('-').join(' ')}
-                      </a>
-                    </Link>
+                    <li key={algorithm}>
+                      <Link href={href}>
+                        <a
+                          className={clsx(
+                            'block px-4 -mx-4 rounded-md hover:bg-highlight',
+                            {
+                              active: isActive,
+                            }
+                          )}
+                        >
+                          {algorithm.split('-').join(' ')}
+                        </a>
+                      </Link>
+                    </li>
                   )
                 })}
               </ul>
@@ -66,9 +65,14 @@ export function Layout({ title, children }) {
       <Head>
         <title>{title}</title>
       </Head>
-      <div style={{ height: '100vh' }} className="w-full flex p-12">
+      <div className={clsx(styles.container, 'w-full flex p-12')}>
         <Nav />
-        <main className="w-full py-12 flex flex-col items-center">
+        <main
+          className={clsx(
+            styles.main,
+            'w-full py-12 flex flex-col items-center'
+          )}
+        >
           {children}
         </main>
       </div>

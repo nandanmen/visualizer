@@ -17,27 +17,6 @@ body {
   box-sizing: border-box;
 }
 
-main {
-  flex: 6;
-}
-
-main > * {
-  width: 42rem;
-}
-
-.display {
-  min-width: 46rem;
-  width: auto;
-}
-
-a.active {
-  @apply text-white bg-stroke;
-}
-
-a.active:hover {
-  @apply bg-stroke;
-}
-
 img {
   max-width: 100%;
   display: block;
@@ -59,16 +38,8 @@ h1 {
   bottom: -1em;
 }
 
-.visual {
-  grid-column: 1 / -2;
-}
-
 .highlight {
   @apply bg-gray-500;
-}
-
-.input:not(:last-child) {
-  @apply mr-4;
 }
 
 .svg {

@@ -1,0 +1,23 @@
+.container {
+  height: 100vh;
+}
+
+.main {
+  flex: 6;
+
+  > * {
+    width: 42rem;
+  }
+}
+
+.link {
+  text-transform: capitalize;
+
+  .active {
+    @apply text-white bg-stroke;
+
+    &:hover {
+      @apply bg-stroke;
+    }
+  }
+}

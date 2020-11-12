@@ -10,6 +10,8 @@ import { Button } from '~components/Button'
 import { Input } from '~components/Input'
 import { useAlgorithm } from '~lib/useAlgorithm'
 
+import styles from './styles/Algorithm.module.scss'
+
 export function Algorithm({ children, algorithm, inputs, parseArgs, ...opts }) {
   const context = useAlgorithm(algorithm, inputs, parseArgs)
   return (
@@ -142,7 +144,8 @@ function Display({ children, className = 'mt-4' }) {
   return (
     <motion.section
       className={clsx(
-        'visual p-16 border-4 rounded-md flex flex-col items-center font-mono bg-background border-stroke z-0 display',
+        styles.display,
+        'p-16 border-4 rounded-md flex flex-col items-center font-mono bg-background border-stroke z-0',
         className
       )}
       layout
