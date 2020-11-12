@@ -6,9 +6,10 @@ export function Button({ onClick, children, className, ...props }) {
   return (
     <motion.button
       className={clsx(
-        'font-semibold bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center text-gray-800',
+        'font-semibold bg-highlight border-3 border-stroke rounded-full w-10 h-10 flex items-center justify-center text-stroke text-sm hover:bg-tertiary',
         className
       )}
+      whileHover={{ scale: 1.05 }}
       onClick={onClick}
       {...props}
     >

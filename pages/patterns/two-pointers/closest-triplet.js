@@ -4,8 +4,6 @@ import { Iterable, IterableItem } from '~components/Iterable'
 import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const { variants } = IterableItem
-
 function ClosestTriples({ state, inputs }) {
   const { done, active, curr, head, tail, triple, minDiff, currDiff } = state
 
@@ -22,7 +20,6 @@ function ClosestTriples({ state, inputs }) {
               key={item.id}
               active={isActive(index)}
               className={{ result: done && triple.includes(index) }}
-              variant={variants.rounded}
               pointer={showPointer(index)}
             >
               {item.val}

@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { BiUpArrow } from 'react-icons/bi'
 
 const variants = {
-  default: 'text-blue-500',
+  default: 'text-stroke',
   highlight: 'text-gray-500',
 }
 

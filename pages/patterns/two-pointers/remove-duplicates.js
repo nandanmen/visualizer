@@ -4,8 +4,6 @@ import { AnimatePresence } from 'framer-motion'
 import { Iterable, IterableItem } from '~components/Iterable'
 import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 
-const { variants } = IterableItem
-
 function RemoveDuplicates({ state, inputs }) {
   const { done, curr, result } = state
   const { arr } = inputs
@@ -20,7 +18,6 @@ function RemoveDuplicates({ state, inputs }) {
               key={`${item}-${index}`}
               active={isActive(index)}
               pointer={isActive(index)}
-              variant={variants.rounded}
             >
               {item}
             </IterableItem>
@@ -37,7 +34,6 @@ function RemoveDuplicates({ state, inputs }) {
                 initial="hidden"
                 exit="hidden"
                 className={{ result: done }}
-                variant={variants.rounded}
               >
                 {item}
               </IterableItem>

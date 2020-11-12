@@ -5,8 +5,6 @@ import { Iterable, IterableItem } from '~components/Iterable'
 import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const { variants } = IterableItem
-
 function SortedSquares({ state, inputs }) {
   const { done, head, tail, result } = state
   const { arr } = inputs
@@ -21,7 +19,6 @@ function SortedSquares({ state, inputs }) {
               key={`${item}-${index}`}
               active={isActive(index)}
               pointer={isActive(index)}
-              variant={variants.rounded}
             >
               {item}
             </IterableItem>
@@ -39,7 +36,6 @@ function SortedSquares({ state, inputs }) {
                   initial="hidden"
                   exit="hidden"
                   className={{ result: done }}
-                  variant={variants.rounded}
                 >
                   {item.val}
                 </IterableItem>
