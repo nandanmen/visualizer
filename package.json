@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@use-it/interval": "^0.1.3",
+    "beautiful-react-hooks": "^0.31.0",
     "clsx": "^1.1.1",
     "date-fns": "^2.11.1",
     "framer-motion": "^2.6.6",
