@@ -98,6 +98,19 @@ function Nav() {
           {isNavOpen ? <FaTimes size="1.5rem" /> : <FaBars size="1.5rem" />}
         </button>
       )}
+      {isNavOpen && showNavButton && (
+        <div
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            opacity: 0.8,
+          }}
+          className="fixed bg-white z-40"
+          onClick={() => setIsNavOpen(false)}
+        ></div>
+      )}
       <motion.aside
         style={isMed ? { originX: 0, originY: 0 } : { originX: 1, originY: 1 }}
         variants={navVariants}
@@ -110,7 +123,7 @@ function Nav() {
           'md:mt-12'
         )}
       >
-        <nav className={styles.nav}>
+        <nav className={clsx(styles.nav, 'z-50')}>
           <ul>
             {Object.entries(routes).map(([pattern, algorithms], i) => (
               <li key={pattern} className="mb-4">
