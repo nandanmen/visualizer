@@ -5,7 +5,7 @@ import { useMediaQuery } from 'beautiful-react-hooks'
 const ItemMargin = 0.5
 
 export function Window({ show, start, end }) {
-  const isLarge = useMediaQuery('(min-width: 1024px)')
+  const isLarge = useMediaQuery('(min-width: 768px)')
   const windowSize = end - start + 1
 
   const itemWidth = isLarge ? 4 : 3
