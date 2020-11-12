@@ -1,20 +1,12 @@
 import React from 'react'
-import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Algorithm } from '~components/Algorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { Window } from '~components/Window'
-import { useAlgorithm } from '~lib/useAlgorithm'
 
-const args = {
-  str: 'aabccbb',
-}
-
-export default function NonRepeatSubstring() {
-  const context = useAlgorithm(nonRepeatSubstring, args)
-
-  const { done, start, end, maxStr } = context.models.state
-  const { str } = context.models.inputs
+function NonRepeatSubstring({ state, inputs }) {
+  const { done, start, end, maxStr } = state
+  const { str } = inputs
 
   const isActive = (index) =>
     inResult(index) || (index >= start && index <= end)
@@ -27,34 +19,43 @@ export default function NonRepeatSubstring() {
   }
 
   return (
-    <Algorithm title="Non-Repeat Substring" pattern="Sliding Window">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section className="pt-8">
-          <Iterable>
-            {Array.from(str).map((item, index) => (
-              <IterableItem
-                key={`${item}-${index}`}
-                animate={isActive(index) ? 'active' : 'inactive'}
-                className={{
-                  result: inResult(index),
-                }}
-              >
-                {item}
-              </IterableItem>
-            ))}
-            <AnimatePresence>
-              {!done && <Window start={start} end={end} />}
-            </AnimatePresence>
-          </Iterable>
-        </section>
-        <section className="mt-16">
-          <code className="block">Max size: {maxStr[1] - maxStr[0] + 1}</code>
-        </section>
-      </Algorithm.Display>
-    </Algorithm>
+    <>
+      <section className="pt-8">
+        <Iterable>
+          {Array.from(str).map((item, index) => (
+            <IterableItem
+              key={`${item}-${index}`}
+              animate={isActive(index) ? 'active' : 'inactive'}
+              className={{
+                result: inResult(index),
+              }}
+            >
+              {item}
+            </IterableItem>
+          ))}
+          <Window show={!done} start={start} end={end} />
+        </Iterable>
+      </section>
+      <section className="mt-16">
+        <code className="block">Max size: {maxStr[1] - maxStr[0] + 1}</code>
+      </section>
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Non-Repeat Substring',
+    pattern: 'Sliding Window',
+    algorithm: nonRepeatSubstring,
+    inputs: {
+      str: 'aabccbb',
+    },
+  },
+  NonRepeatSubstring
+)
+
+// --
 
 function nonRepeatSubstring({ record }, { str }) {
   const seen = {}

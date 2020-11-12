@@ -1,58 +1,63 @@
 import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Algorithm } from '~components/Algorithm'
-import { useAlgorithm } from '~lib/useAlgorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 
-const input = {
-  nums: [1, 2, 3, 4, 6],
-  target: 6,
-}
 const { variants } = IterableItem
 
-export default function PairSum() {
-  const context = useAlgorithm(findPairWithSum, input)
-
-  const { done, head, tail, result } = context.models.state
-  const { nums, target } = context.models.inputs
+function PairSum({ state, inputs }) {
+  const { done, head, tail, result } = state
+  const { nums, target } = inputs
   const isActive = (index) =>
     (done && result === null) || index === head || index === tail
   const showPointer = (index) => (done ? false : isActive(index))
 
   return (
-    <Algorithm title="Pair Sum" pattern="Two Pointers">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section>
-          <Iterable>
-            {nums.map((item, index) => (
-              <IterableItem
-                key={`${item}-${index}`}
-                active={isActive(index)}
-                className={{
-                  'not-found': done && !result,
-                  result: done && result && result.includes(index),
-                }}
-                pointer={showPointer(index)}
-                variant={variants.rounded}
-              >
-                {item}
-              </IterableItem>
-            ))}
-          </Iterable>
-        </section>
-        <section className="mt-8">
-          <code className="block">Target: {target}</code>
-          <code className="block">
-            {done && result === null
-              ? 'Not found :('
-              : `Current sum: ${nums[head] + nums[tail]}`}
-          </code>
-        </section>
-      </Algorithm.Display>
-    </Algorithm>
+    <>
+      <section>
+        <Iterable>
+          {nums.map((item, index) => (
+            <IterableItem
+              key={`${item}-${index}`}
+              active={isActive(index)}
+              className={{
+                'not-found': done && !result,
+                result: done && result && result.includes(index),
+              }}
+              pointer={showPointer(index)}
+              variant={variants.rounded}
+            >
+              {item}
+            </IterableItem>
+          ))}
+        </Iterable>
+      </section>
+      <section className="mt-8">
+        <code className="block">Target: {target}</code>
+        <code className="block">
+          {done && result === null
+            ? 'Not found :('
+            : `Current sum: ${nums[head] + nums[tail]}`}
+        </code>
+      </section>
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Pair Sum',
+    pattern: 'Two Pointers',
+    algorithm: findPairWithSum,
+    inputs: {
+      nums: [1, 2, 3, 4, 6],
+      target: 6,
+    },
+  },
+  PairSum
+)
+
+// --
 
 function findPairWithSum({ record }, { nums, target }) {
   let head = 0

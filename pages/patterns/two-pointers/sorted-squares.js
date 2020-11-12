@@ -2,62 +2,69 @@ import React from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Algorithm } from '~components/Algorithm'
-import { useAlgorithm } from '~lib/useAlgorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const input = [-2, -1, 0, 2, 3]
 const { variants } = IterableItem
 
-export default function SortedSquares() {
-  const context = useAlgorithm(sortedSquare, { arr: input })
-
-  const { done, head, tail, result } = context.models.state
-  const { arr } = context.models.inputs
+function SortedSquares({ state, inputs }) {
+  const { done, head, tail, result } = state
+  const { arr } = inputs
   const isActive = (index) => index === head || index === tail
 
   return (
-    <Algorithm title="Sorted Squares" pattern="Two Pointers">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section className="mb-4">
+    <>
+      <section className="mb-4">
+        <Iterable>
+          {arr.map((item, index) => (
+            <IterableItem
+              key={`${item}-${index}`}
+              active={isActive(index)}
+              pointer={isActive(index)}
+              variant={variants.rounded}
+            >
+              {item}
+            </IterableItem>
+          ))}
+        </Iterable>
+      </section>
+      {result.length > 0 && (
+        <section className="mt-4">
           <Iterable>
-            {arr.map((item, index) => (
-              <IterableItem
-                key={`${item}-${index}`}
-                active={isActive(index)}
-                pointer={isActive(index)}
-                variant={variants.rounded}
-              >
-                {item}
-              </IterableItem>
-            ))}
+            <AnimatePresence>
+              {result.map((item) => (
+                <IterableItem
+                  key={item.id}
+                  animate="active"
+                  initial="hidden"
+                  exit="hidden"
+                  className={{ result: done }}
+                  variant={variants.rounded}
+                >
+                  {item.val}
+                </IterableItem>
+              ))}
+            </AnimatePresence>
           </Iterable>
         </section>
-        {result.length > 0 && (
-          <section className="mt-4">
-            <Iterable>
-              <AnimatePresence>
-                {result.map((item) => (
-                  <IterableItem
-                    key={item.id}
-                    animate="active"
-                    initial="hidden"
-                    exit="hidden"
-                    className={{ result: done }}
-                    variant={variants.rounded}
-                  >
-                    {item.val}
-                  </IterableItem>
-                ))}
-              </AnimatePresence>
-            </Iterable>
-          </section>
-        )}
-      </Algorithm.Display>
-    </Algorithm>
+      )}
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Sorted Squares',
+    pattern: 'Two Pointers',
+    algorithm: sortedSquare,
+    inputs: {
+      arr: [-2, -1, 0, 2, 3],
+    },
+  },
+  SortedSquares
+)
+
+// --
 
 // Uncomment this to use the non-optimal O(nlogn) version
 /* function sortedSquaresNLogN({ record }, { arr }) {

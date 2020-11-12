@@ -8,17 +8,17 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 
 import { Button } from '~components/Button'
 import { Input } from '~components/Input'
-import { Layout } from '~components/Layout'
+import { useAlgorithm } from '~lib/useAlgorithm'
 
-export function Algorithm({ title, pattern, children }) {
+export function Algorithm({ children, algorithm, inputs, parseArgs, ...opts }) {
+  const context = useAlgorithm(algorithm, inputs, parseArgs)
   return (
-    <Layout title={title}>
-      <header className="mb-12">
-        <p className="text-base text-gray-500">{pattern}</p>
-        <h1 className="text-5xl font-semibold">{title}</h1>
-      </header>
-      <AnimateSharedLayout>{children}</AnimateSharedLayout>
-    </Layout>
+    <AnimateSharedLayout>
+      <Algorithm.Controls context={context} {...opts} />
+      <Algorithm.Display>
+        {React.cloneElement(React.Children.only(children), context.models)}
+      </Algorithm.Display>
+    </AnimateSharedLayout>
   )
 }
 
