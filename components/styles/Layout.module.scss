@@ -10,14 +10,14 @@
   }
 }
 
-.link {
+.nav {
   text-transform: capitalize;
+}
 
-  .active {
-    @apply text-white bg-stroke;
+.active {
+  @apply text-white bg-stroke;
 
-    &:hover {
-      @apply bg-stroke;
-    }
+  &:hover {
+    @apply bg-stroke;
   }
 }

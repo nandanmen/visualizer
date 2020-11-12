@@ -22,10 +22,10 @@ function Nav() {
   const router = useRouter()
   return (
     <aside className="p-8 flex-1 border-4 border-stroke h-full rounded-lg">
-      <nav>
+      <nav className={styles.nav}>
         <ul>
           {Object.entries(routes).map(([pattern, algorithms]) => (
-            <li key={pattern} className={clsx(styles.link, 'mb-4')}>
+            <li key={pattern} className="mb-4">
               <h1 className="text-lg font-semibold mb-4">
                 {pattern.split('-').join(' ')}
               </h1>
@@ -40,7 +40,7 @@ function Nav() {
                           className={clsx(
                             'block px-4 -mx-4 rounded-md hover:bg-highlight',
                             {
-                              active: isActive,
+                              [styles.active]: isActive,
                             }
                           )}
                         >
