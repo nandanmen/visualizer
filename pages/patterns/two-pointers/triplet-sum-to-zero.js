@@ -1,17 +1,12 @@
 import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Algorithm } from '~components/Algorithm'
-import { useAlgorithm } from '~lib/useAlgorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const input = [-3, 0, 1, 2, -1, 1, -2]
 const { variants } = IterableItem
 
-export default function TripleSumToZero() {
-  const context = useAlgorithm(findTriples, { arr: input })
-
-  const { state } = context.models
+function TripleSumToZero({ state }) {
   const { done, active, curr, head, tail, result } = state
 
   const isActive = (index) =>
@@ -19,33 +14,44 @@ export default function TripleSumToZero() {
   const showPointer = (index) => !done && !active && isActive(index)
 
   return (
-    <Algorithm title="Triplet Sum to Zero" pattern="Two Pointers">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section>
-          <Iterable>
-            {state.input.map((item, index) => (
-              <IterableItem
-                key={item.id}
-                active={isActive(index)}
-                className={{ result: done }}
-                variant={variants.rounded}
-                pointer={showPointer(index)}
-              >
-                {item.val}
-              </IterableItem>
-            ))}
-          </Iterable>
+    <>
+      <section>
+        <Iterable>
+          {state.input.map((item, index) => (
+            <IterableItem
+              key={item.id}
+              active={isActive(index)}
+              className={{ result: done }}
+              variant={variants.rounded}
+              pointer={showPointer(index)}
+            >
+              {item.val}
+            </IterableItem>
+          ))}
+        </Iterable>
+      </section>
+      {result && result.length > 0 && (
+        <section className="mt-8">
+          <code className="block">{JSON.stringify(result, null, 1)}</code>
         </section>
-        {result && result.length > 0 && (
-          <section className="mt-8">
-            <code className="block">{JSON.stringify(result, null, 1)}</code>
-          </section>
-        )}
-      </Algorithm.Display>
-    </Algorithm>
+      )}
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Triplet Sum to Zero',
+    pattern: 'Two Pointers',
+    algorithm: findTriples,
+    inputs: {
+      arr: [-3, 0, 1, 2, -1, 1, -2],
+    },
+  },
+  TripleSumToZero
+)
+
+// --
 
 export function findTriples({ record }, { arr }) {
   const nums = addIds(arr)

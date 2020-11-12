@@ -1,20 +1,12 @@
 import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Algorithm } from '~components/Algorithm'
-import { useAlgorithm } from '~lib/useAlgorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { addIds } from '~utils/helpers'
 
-const args = {
-  arr: [1, -3, -1, 2],
-  target: 1,
-}
 const { variants } = IterableItem
 
-export default function ClosestTriples() {
-  const context = useAlgorithm(findClosestTriples, args)
-
-  const { state, inputs } = context.models
+function ClosestTriples({ state, inputs }) {
   const { done, active, curr, head, tail, triple, minDiff, currDiff } = state
 
   const isActive = (index) =>
@@ -22,33 +14,45 @@ export default function ClosestTriples() {
   const showPointer = (index) => !done && !active && isActive(index)
 
   return (
-    <Algorithm title="Closest Triplet" pattern="Two Pointers">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section>
-          <Iterable>
-            {state.input.map((item, index) => (
-              <IterableItem
-                key={item.id}
-                active={isActive(index)}
-                className={{ result: done && triple.includes(index) }}
-                variant={variants.rounded}
-                pointer={showPointer(index)}
-              >
-                {item.val}
-              </IterableItem>
-            ))}
-          </Iterable>
-        </section>
-        <section className="mt-8 text-center">
-          <code className="block">Target: {inputs.target}</code>
-          <code className="block">Min diff: {minDiff}</code>
-          <code className="block">Current diff: {currDiff}</code>
-        </section>
-      </Algorithm.Display>
-    </Algorithm>
+    <>
+      <section>
+        <Iterable>
+          {state.input.map((item, index) => (
+            <IterableItem
+              key={item.id}
+              active={isActive(index)}
+              className={{ result: done && triple.includes(index) }}
+              variant={variants.rounded}
+              pointer={showPointer(index)}
+            >
+              {item.val}
+            </IterableItem>
+          ))}
+        </Iterable>
+      </section>
+      <section className="mt-8 text-center">
+        <code className="block">Target: {inputs.target}</code>
+        <code className="block">Min diff: {minDiff}</code>
+        <code className="block">Current diff: {currDiff}</code>
+      </section>
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Closest Triples',
+    pattern: 'Two Pointers',
+    algorithm: findClosestTriples,
+    inputs: {
+      arr: [1, -3, -1, 2],
+      target: 1,
+    },
+  },
+  ClosestTriples
+)
+
+// --
 
 export function findClosestTriples({ record }, { arr, target }) {
   const nums = addIds(arr)

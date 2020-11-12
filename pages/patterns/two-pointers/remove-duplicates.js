@@ -2,59 +2,66 @@ import React from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { Algorithm } from '~components/Algorithm'
-import { useAlgorithm } from '~lib/useAlgorithm'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 
-const input = [2, 3, 3, 3, 6, 9, 9]
 const { variants } = IterableItem
 
-export default function RemoveDuplicates() {
-  const context = useAlgorithm(removeDuplicates, { arr: input })
-
-  const { done, curr, result } = context.models.state
-  const { arr } = context.models.inputs
+function RemoveDuplicates({ state, inputs }) {
+  const { done, curr, result } = state
+  const { arr } = inputs
   const isActive = (index) => index === curr
 
   return (
-    <Algorithm title="Remove Duplicates" pattern="Two Pointers">
-      <Algorithm.Controls context={context} />
-      <Algorithm.Display>
-        <section>
-          <Iterable>
-            {arr.map((item, index) => (
+    <>
+      <section>
+        <Iterable>
+          {arr.map((item, index) => (
+            <IterableItem
+              key={`${item}-${index}`}
+              active={isActive(index)}
+              pointer={isActive(index)}
+              variant={variants.rounded}
+            >
+              {item}
+            </IterableItem>
+          ))}
+        </Iterable>
+      </section>
+      <section className="mt-8">
+        <Iterable>
+          <AnimatePresence>
+            {result.map((item, index) => (
               <IterableItem
                 key={`${item}-${index}`}
-                active={isActive(index)}
-                pointer={isActive(index)}
+                animate="active"
+                initial="hidden"
+                exit="hidden"
+                className={{ result: done }}
                 variant={variants.rounded}
               >
                 {item}
               </IterableItem>
             ))}
-          </Iterable>
-        </section>
-        <section className="mt-8">
-          <Iterable>
-            <AnimatePresence>
-              {result.map((item, index) => (
-                <IterableItem
-                  key={`${item}-${index}`}
-                  animate="active"
-                  initial="hidden"
-                  exit="hidden"
-                  className={{ result: done }}
-                  variant={variants.rounded}
-                >
-                  {item}
-                </IterableItem>
-              ))}
-            </AnimatePresence>
-          </Iterable>
-        </section>
-      </Algorithm.Display>
-    </Algorithm>
+          </AnimatePresence>
+        </Iterable>
+      </section>
+    </>
   )
 }
+
+export default makeAlgorithmPage(
+  {
+    title: 'Remove Duplicates',
+    pattern: 'Two Pointers',
+    algorithm: removeDuplicates,
+    inputs: {
+      arr: [2, 3, 3, 3, 6, 9, 9],
+    },
+  },
+  RemoveDuplicates
+)
+
+// --
 
 function removeDuplicates({ record }, { arr }) {
   const result = []

@@ -1,9 +1,27 @@
 import React from 'react'
 
-import { Algorithm } from '~components/Algorithm'
 import { LinkedList, LinkedListItem } from '~components/LinkedList'
-import { useAlgorithm } from '~lib/useAlgorithm'
 import * as List from '~lib/linked-list'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
+
+function LinkedListCycle({ state, inputs }) {
+  const { fast, slow, done } = state
+  return (
+    <LinkedList list={inputs.list}>
+      {({ item }) => (
+        <LinkedListItem active={done || item === fast || item === slow}>
+          {item === fast && <text>fast</text>}
+          {item === slow && <text>slow</text>}
+          <LinkedListItem.Content className={done && 'text-green-600'}>
+            {item.value}
+          </LinkedListItem.Content>
+        </LinkedListItem>
+      )}
+    </LinkedList>
+  )
+}
+
+// --
 
 function parseArgs({ list, cycleTo }) {
   return { list: List.fromArray(list, { cycle: cycleTo }), cycleTo }
@@ -16,37 +34,22 @@ function serialize(key, val) {
   return [key, JSON.stringify(val)]
 }
 
-export default function LinkedListCycle() {
-  const context = useAlgorithm(
-    hasCycle,
-    {
+export default makeAlgorithmPage(
+  {
+    title: 'Linked List Cycle',
+    pattern: `Fast & Slow Pointers`,
+    algorithm: hasCycle,
+    inputs: {
       list: [1, 2, 3, 4, 5, 6],
       cycleTo: 3,
     },
-    parseArgs
-  )
-  const { state, inputs } = context.models
-  const { fast, slow, done } = state
+    parseArgs,
+    serialize,
+  },
+  LinkedListCycle
+)
 
-  return (
-    <Algorithm title="Linked List Cycle" pattern={`Fast & Slow Pointers`}>
-      <Algorithm.Controls context={context} serialize={serialize} />
-      <Algorithm.Display>
-        <LinkedList list={inputs.list}>
-          {({ item }) => (
-            <LinkedListItem active={done || item === fast || item === slow}>
-              {item === fast && <text>fast</text>}
-              {item === slow && <text>slow</text>}
-              <LinkedListItem.Content className={done && 'text-green-600'}>
-                {item.value}
-              </LinkedListItem.Content>
-            </LinkedListItem>
-          )}
-        </LinkedList>
-      </Algorithm.Display>
-    </Algorithm>
-  )
-}
+// --
 
 function hasCycle({ record }, { list }) {
   let fast = list
