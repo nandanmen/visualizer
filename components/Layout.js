@@ -16,12 +16,12 @@ export function Layout({ title, children }) {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
-      <div className={clsx(styles.container, 'p-4 w-full flex lg:p-12')}>
+      <div className={clsx(styles.container, 'w-full flex lg:p-12')}>
         <Nav />
         <main
           className={clsx(
             styles.main,
-            'w-full py-12 flex flex-col items-center'
+            'w-full py-12 flex flex-col lg:items-center'
           )}
         >
           {children}
@@ -107,7 +107,7 @@ function Nav() {
         initial="hidden"
         className={clsx(
           styles.nav_container,
-          'fixed p-8 flex-1 border-4 border-stroke rounded-lg bg-white z-40 mt-8 mb-12 mx-12'
+          'fixed p-8 flex-1 border-4 border-stroke rounded-lg bg-white z-40 mt-8 mb-12 mx-8'
         )}
       >
         <nav className={styles.nav}>

@@ -1,12 +1,17 @@
 .container {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .main {
   flex: 6;
+  max-width: 100%;
 
   > * {
     max-width: 42rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    display: block;
   }
 }
 

@@ -27,7 +27,7 @@ function ClosestTriples({ state, inputs }) {
           ))}
         </Iterable>
       </section>
-      <section className="mt-8 text-center">
+      <section className="mt-8 lg:text-center">
         <code className="block">Target: {inputs.target}</code>
         <code className="block">Min diff: {minDiff}</code>
         <code className="block">Current diff: {currDiff}</code>

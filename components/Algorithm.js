@@ -78,7 +78,7 @@ function Controls({
   }
 
   return (
-    <motion.div layout>
+    <motion.div layout className="px-4">
       <motion.section
         layout
         className={clsx('flex text-xs lg:text-base', className)}
@@ -111,14 +111,27 @@ function Controls({
         >
           {editing ? <FaTimes /> : <FaCog />}
         </Button>
-        <section className="ml-auto flex items-center">
-          <Button onClick={actions.prev} title="Previous step">
+        <section
+          className={clsx(
+            styles.stepper,
+            'flex flex-grow items-center justify-end lg:ml-auto'
+          )}
+        >
+          <Button
+            className={styles.prev}
+            onClick={actions.prev}
+            title="Previous step"
+          >
             <BiLeftArrowAlt size="1.5em" />
           </Button>
-          <p className="mx-2 font-mono">
+          <p className={clsx(styles.text, 'mx-2 font-mono')}>
             {models.steps.indexOf(models.state) + 1} / {models.steps.length}
           </p>
-          <Button onClick={actions.next} title="Next step">
+          <Button
+            className={clsx(styles.next, 'ml-2')}
+            onClick={actions.next}
+            title="Next step"
+          >
             <BiRightArrowAlt size="1.5em" />
           </Button>
         </section>
@@ -146,9 +159,12 @@ function Controls({
 function Display({ children, className = 'mt-4' }) {
   return (
     <motion.section
+      id="display"
       className={clsx(
         styles.display,
-        'px-4 py-6 text-sm md:text-base lg:p-16 border-4 rounded-md flex flex-col items-start lg:items-center font-mono bg-background border-stroke z-0 overflow-x-scroll',
+        'px-4 py-6 text-sm border-t-4 border-b-4 flex flex-col items-start font-mono bg-background border-stroke z-0 overflow-x-scroll',
+        'md:text-base md:border-4',
+        'lg:p-16 lg:rounded-md lg:items-center',
         className
       )}
       layout
