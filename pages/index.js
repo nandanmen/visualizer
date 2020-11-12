@@ -6,15 +6,15 @@ import { Layout } from '~components/Layout'
 function Home() {
   return (
     <Layout title="Algorithms">
-      <h1 className="text-3xl font-semibold mb-4">Patterns</h1>
+      <h1 className="text-5xl font-semibold text-stroke">Algorithm Patterns</h1>
       <ul>
         <li>
-          <Link href="/patterns/sliding-window">
+          <Link href="/patterns/sliding-window/find-all-averages">
             <a>Sliding Window</a>
           </Link>
         </li>
         <li>
-          <Link href="/patterns/two-pointers">
+          <Link href="/patterns/two-pointers/closest-triplet">
             <a>Two Pointers</a>
           </Link>
         </li>
