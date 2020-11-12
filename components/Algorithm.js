@@ -163,7 +163,7 @@ function Display({ children, className = 'mt-4' }) {
       className={clsx(
         styles.display,
         'px-4 py-6 text-sm border-t-4 border-b-4 flex flex-col items-start font-mono bg-background border-stroke z-0 overflow-x-scroll',
-        'md:text-base md:border-4 md:rounded-md md:p-16 md:items-center md:overflow-x-hidden',
+        'md:text-base md:border-4 md:rounded-md md:p-16 md:items-center md:overflow-hidden',
         className
       )}
       layout
