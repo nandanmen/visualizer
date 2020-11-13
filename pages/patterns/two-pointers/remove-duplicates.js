@@ -49,6 +49,7 @@ export default makeAlgorithmPage(
   {
     title: 'Remove Duplicates',
     pattern: 'Two Pointers',
+    description: 'Given a sorted array, remove its duplicates.',
     algorithm: removeDuplicates,
     inputs: {
       arr: [2, 3, 3, 3, 6, 9, 9],

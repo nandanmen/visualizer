@@ -45,6 +45,8 @@ export default makeAlgorithmPage(
   {
     title: 'Pair Sum',
     pattern: 'Two Pointers',
+    description:
+      'Given a sorted array and a target, find a pair of numbers that add up to the target.',
     algorithm: findPairWithSum,
     inputs: {
       nums: [1, 2, 3, 4, 6],

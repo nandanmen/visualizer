@@ -52,6 +52,8 @@ export default makeAlgorithmPage(
   {
     title: 'Sorted Squares',
     pattern: 'Two Pointers',
+    description:
+      'Given a sorted array, return a sorted array of each element squared.',
     algorithm: sortedSquare,
     inputs: {
       arr: [-2, -1, 0, 2, 3],

@@ -40,6 +40,7 @@ export default makeAlgorithmPage(
   {
     title: 'Triplet Sum to Zero',
     pattern: 'Two Pointers',
+    description: 'Given an array, find all triplets that add up to zero.',
     algorithm: findTriples,
     inputs: {
       arr: [-3, 0, 1, 2, -1, 1, -2],

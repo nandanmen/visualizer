@@ -40,6 +40,8 @@ export default makeAlgorithmPage(
   {
     title: 'Closest Triples',
     pattern: 'Two Pointers',
+    description:
+      'Given an array and a target number, find the triple whose sum is closest to the given target.',
     algorithm: findClosestTriples,
     inputs: {
       arr: [1, -3, -1, 2],

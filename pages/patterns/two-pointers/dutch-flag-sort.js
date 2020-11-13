@@ -38,6 +38,8 @@ export default makeAlgorithmPage(
   {
     title: 'Dutch Flag Sort',
     pattern: 'Two Pointers',
+    description:
+      'Given an array of only 0s, 1s, and 2s, sort the array in linear time.',
     algorithm: dutchFlagSort,
     inputs: { arr: [2, 2, 0, 1, 2, 0] },
   },
