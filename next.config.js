@@ -4,7 +4,7 @@ module.exports = {
       {
         source: '/',
         destination: '/patterns/sliding-window/find-all-averages',
-        permanent: true,
+        permanent: false,
       },
     ]
   },

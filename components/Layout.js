@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { useMediaQuery } from 'beautiful-react-hooks'
 import { motion } from 'framer-motion'
-import { FaBars, FaTimes } from 'react-icons/fa'
+import { FaBars, FaLastfmSquare, FaTimes } from 'react-icons/fa'
 
 import styles from './styles/Layout.module.scss'
 
@@ -83,6 +83,18 @@ function Nav() {
     if (!showNavButton) {
       setIsNavOpen(true)
     }
+  }, [showNavButton])
+
+  useEffect(() => {
+    const close = (evt) => {
+      if (evt.key === 'Escape') {
+        setIsNavOpen(false)
+      }
+    }
+    if (showNavButton) {
+      document.addEventListener('keydown', close)
+    }
+    return () => document.removeEventListener('keydown', close)
   }, [showNavButton])
 
   return (
