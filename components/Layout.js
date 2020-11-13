@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { useMediaQuery } from 'beautiful-react-hooks'
 import { motion } from 'framer-motion'
-import { FaBars, FaLastfmSquare, FaTimes } from 'react-icons/fa'
+import { FaBars, FaTimes } from 'react-icons/fa'
 
 import styles from './styles/Layout.module.scss'
 
@@ -15,14 +15,14 @@ export function Layout({ children }) {
       <Head>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
-      <div className={clsx(styles.container, 'w-full flex md:p-6 lg:p-12')}>
+      <div className={clsx(styles.container, 'w-full flex md:px-6 lg:px-12')}>
         <Nav />
         <main
           className={clsx(
             styles.main,
             'w-full py-12 flex flex-col',
-            'md:items-center md:pt-20',
-            'lg:pt-8'
+            'md:items-center md:pt-20 md:mt-6',
+            'lg:mt-12 lg:pt-8'
           )}
         >
           {children}
@@ -131,11 +131,16 @@ function Nav() {
         initial="hidden"
         className={clsx(
           styles.nav_container,
-          'fixed p-8 flex-1 border-4 border-stroke rounded-lg bg-white z-40 mt-8 mb-12 mx-8',
-          'md:mt-12'
+          'fixed flex-1 z-40 mt-8 mb-12 mx-8',
+          'xl:py-12 xl:m-0'
         )}
       >
-        <nav className={clsx(styles.nav, 'z-50')}>
+        <nav
+          className={clsx(
+            styles.nav,
+            'p-8 border-4 border-stroke rounded-lg bg-white z-50'
+          )}
+        >
           <ul>
             {Object.entries(routes).map(([pattern, algorithms], i) => (
               <li key={pattern} className="mb-4">

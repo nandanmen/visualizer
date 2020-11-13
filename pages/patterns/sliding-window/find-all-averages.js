@@ -41,6 +41,8 @@ export default makeAlgorithmPage(
   {
     title: 'Find All Averages',
     pattern: 'Sliding Window',
+    description:
+      'Given an array, find the averages of all subarrays of size k.',
     algorithm: findAllAverages,
     inputs: {
       arr: [1, 3, 2, 6, -1, 4, 1, 8, 2],
