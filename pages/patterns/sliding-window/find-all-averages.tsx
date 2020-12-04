@@ -1,13 +1,24 @@
 import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
 import { Window } from '~components/Window'
+import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
+import { DisplayProps, RecordableFunction } from '~lib/types'
 
-function FindAllAverages({ state, inputs }) {
+const meta = {
+  title: 'Find All Averages',
+  pattern: 'Sliding Window',
+  description: 'Given an array, find the averages of all subarrays of size k.',
+}
+
+function FindAllAverages({
+  state,
+  inputs,
+}: DisplayProps<typeof findAllAverages>) {
   const { done, start, end, result } = state
   const { arr, k } = inputs
-  const isActive = (index) => (done ? true : index >= start && index <= end)
+  const isActive = (index: number) =>
+    done ? true : index >= start && index <= end
 
   return (
     <>
@@ -37,24 +48,18 @@ function FindAllAverages({ state, inputs }) {
   )
 }
 
-export default makeAlgorithmPage(
-  {
-    title: 'Find All Averages',
-    pattern: 'Sliding Window',
-    description:
-      'Given an array, find the averages of all subarrays of size k.',
-    algorithm: findAllAverages,
-    inputs: {
-      arr: [1, 3, 2, 6, -1, 4, 1, 8, 2],
-      k: 3,
-    },
-  },
-  FindAllAverages
-)
-
 // --
 
-function findAllAverages({ record }, { arr, k }) {
+const findAllAverages: RecordableFunction<
+  { arr: number[]; k: number },
+  {
+    start: number
+    end: number
+    sum: number
+    result: number[]
+    done: boolean
+  }
+> = ({ record }, { arr, k }) => {
   const result = []
   let windowStart = 0
   let windowSum = 0
@@ -81,3 +86,15 @@ function findAllAverages({ record }, { arr, k }) {
 
   return result
 }
+
+export default makeAlgorithmPage(
+  {
+    algorithm: findAllAverages,
+    inputs: {
+      arr: [1, 3, 2, 6, -1, 4, 1, 8, 2],
+      k: 3,
+    },
+    ...meta,
+  },
+  FindAllAverages
+)

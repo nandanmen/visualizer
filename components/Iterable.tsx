@@ -1,6 +1,6 @@
 import React from 'react'
-import { motion } from 'framer-motion'
-import clsx from 'clsx'
+import { motion, HTMLMotionProps } from 'framer-motion'
+import clsx, { ClassValue } from 'clsx'
 
 import { Pointer } from './Pointer'
 
@@ -23,13 +23,19 @@ export function Iterable({ children }) {
   return <div className="flex items-center relative">{children}</div>
 }
 
+type IterableItemProps = {
+  className: ClassValue
+  active?: boolean
+  pointer?: boolean
+} & Omit<HTMLMotionProps<'div'>, 'className'>
+
 export function IterableItem({
   children,
   className,
   active,
   pointer,
   ...motionProps
-}) {
+}: IterableItemProps) {
   return (
     <motion.div
       variants={variants}

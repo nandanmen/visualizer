@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import clsx from 'clsx'
+import React from 'react'
+import clsx, { ClassValue } from 'clsx'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
 import { FaUndoAlt, FaCheck, FaTimes, FaCog } from 'react-icons/fa'
@@ -9,11 +9,12 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import { Button } from '~components/Button'
 import { Input } from '~components/Input'
 import { useAlgorithm } from '~lib/useAlgorithm'
+import { AlgorithmContext } from '~lib/types'
 
 import styles from './styles/Algorithm.module.scss'
 
-export function Algorithm({ children, algorithm, inputs, parseArgs, ...opts }) {
-  const context = useAlgorithm(algorithm, inputs, parseArgs)
+export function Algorithm({ children, algorithm, inputs, ...opts }) {
+  const context = useAlgorithm(algorithm, inputs)
   return (
     <AnimateSharedLayout>
       <Algorithm.Controls context={context} {...opts} />
@@ -26,17 +27,24 @@ export function Algorithm({ children, algorithm, inputs, parseArgs, ...opts }) {
 
 // ---
 
+type ControlsProps = {
+  context: AlgorithmContext
+  serialize?: (key: string, val: unknown) => readonly [string, string]
+  unserialize?: (key: string, val: string) => readonly [string, unknown]
+  className?: ClassValue
+}
+
 const forms = {
   Inputs: 'inputs',
   Settings: 'settings',
+} as const
+
+function defaultSerializer(key: string, val: unknown) {
+  return [key, JSON.stringify(val)] as const
 }
 
-function defaultSerializer(key, val) {
-  return [key, JSON.stringify(val)]
-}
-
-function defaultUnserializer(key, val) {
-  return [key, val.length && JSON.parse(val)]
+function defaultUnserializer(key: string, val: string) {
+  return [key, val.length && JSON.parse(val)] as const
 }
 
 function Controls({
@@ -44,13 +52,15 @@ function Controls({
   serialize = defaultSerializer,
   unserialize = defaultUnserializer,
   className = '',
-}) {
-  const [editing, setEditing] = useState(null)
-  const [inputs, setInputs] = useState({})
+}: ControlsProps) {
+  const [editing, setEditing] = React.useState(null)
+  const [inputs, setInputs] = React.useState({})
 
   const save = () => {
     const newInputs = Object.fromEntries(
-      Object.entries(inputs).map(([name, value]) => unserialize(name, value))
+      Object.entries(inputs).map(([name, value]: [string, string]) =>
+        unserialize(name, value)
+      )
     )
     actions.reset()
     editing === forms.Inputs
@@ -59,7 +69,7 @@ function Controls({
     setEditing(null)
   }
 
-  const toggle = (form) => {
+  const toggle = (form: 'inputs' | 'settings') => {
     if (editing === null) {
       setEditing(form)
     } else {

@@ -1,19 +1,31 @@
-import { useState, useMemo } from 'react'
+import React from 'react'
 import useInterval from '@use-it/interval'
-import { identity } from '~utils/helpers'
 
-const defaultSettings = {
-  delay: 400,
-}
+import { AlgorithmContext, Settings } from '~lib/types'
 
-export function useAlgorithm(algorithm, defaultInputs, parser = identity) {
-  const [activeStepIndex, setActiveStepIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [inputs, setInputs] = useState(parser(defaultInputs))
-  const [settings, setSettings] = useState(defaultSettings)
+/**
+ * Given an algorithm and arguments, this hook runs the algorithm with the given
+ * arguments and returns a series of algorithm "states" and animation controls.
+ */
+export function useAlgorithm<
+  Parameters extends Record<string, unknown>,
+  State = unknown
+>(
+  algorithm: (
+    { record }: { record: (data: State) => void },
+    args: Parameters
+  ) => unknown,
+  initialArguments: Parameters
+): AlgorithmContext<Parameters, State> {
+  const [activeStepIndex, setActiveStepIndex] = React.useState(0)
+  const [isPlaying, setIsPlaying] = React.useState(false)
+  const [inputs, setInputs] = React.useState(initialArguments)
+  const [settings, setSettings] = React.useState<Settings>({
+    delay: 500,
+  })
 
-  const steps = useMemo(() => {
-    const recordedSteps = []
+  const steps = React.useMemo(() => {
+    const recordedSteps: State[] = []
     algorithm({ record: (data) => recordedSteps.push(data) }, inputs)
     return recordedSteps
   }, [inputs, algorithm])
@@ -56,9 +68,9 @@ export function useAlgorithm(algorithm, defaultInputs, parser = identity) {
   return {
     models: {
       state: steps[activeStepIndex],
-      isPlaying,
       steps,
       inputs,
+      isPlaying,
       settings,
     },
     actions: {
@@ -66,8 +78,9 @@ export function useAlgorithm(algorithm, defaultInputs, parser = identity) {
       toggle,
       next,
       prev,
-      setInputs: (inputs) => setInputs(parser(inputs)),
-      setSettings,
+      setInputs,
+      setSettings: (partialSettings) =>
+        setSettings({ ...settings, ...partialSettings }),
     },
   }
 }
