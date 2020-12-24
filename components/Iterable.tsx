@@ -24,7 +24,7 @@ export function Iterable({ children }) {
 }
 
 type IterableItemProps = {
-  className: ClassValue
+  className?: ClassValue
   active?: boolean
   pointer?: boolean
 } & Omit<HTMLMotionProps<'div'>, 'className'>

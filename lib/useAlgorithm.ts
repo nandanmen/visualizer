@@ -1,8 +1,11 @@
 import React from 'react'
 import useInterval from '@use-it/interval'
+import rfdc from 'rfdc'
 
 import { AlgorithmContext, Settings } from './types'
 import snapshot from './snapshot'
+
+const clone = rfdc()
 
 /**
  * Given an algorithm and arguments, this hook runs the algorithm with the given
@@ -14,18 +17,19 @@ export function useAlgorithm<State = unknown>(
 ): AlgorithmContext<any[], State> {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0)
   const [isPlaying, setIsPlaying] = React.useState(false)
-  const [inputs, setInputs] = React.useState(initialArguments)
+  const [inputs, setInputs] = React.useState(clone(initialArguments))
   const [settings, setSettings] = React.useState<Settings>({
     delay: 500,
   })
 
   const steps = React.useMemo(() => {
     const snapshots = snapshot.createSnapshot()
-    algorithm(snapshots)(...inputs)
+    const returnVal = algorithm(snapshots)(...inputs)
 
     const last = snapshots.data[snapshots.data.length - 1]
     if (last) {
       last.__done = true
+      last.__returnValue = returnVal
     }
 
     return snapshots.data
