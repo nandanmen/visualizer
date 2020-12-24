@@ -1,22 +1,17 @@
 import React from 'react'
 import useInterval from '@use-it/interval'
 
-import { AlgorithmContext, Settings } from '~lib/types'
+import { AlgorithmContext, Settings } from './types'
+import snapshot from './snapshot'
 
 /**
  * Given an algorithm and arguments, this hook runs the algorithm with the given
  * arguments and returns a series of algorithm "states" and animation controls.
  */
-export function useAlgorithm<
-  Parameters extends Record<string, unknown>,
-  State = unknown
->(
-  algorithm: (
-    { record }: { record: (data: State) => void },
-    args: Parameters
-  ) => unknown,
-  initialArguments: Parameters
-): AlgorithmContext<Parameters, State> {
+export function useAlgorithm<State = unknown>(
+  algorithm: any,
+  initialArguments: any[]
+): AlgorithmContext<any[], State> {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [inputs, setInputs] = React.useState(initialArguments)
@@ -25,9 +20,15 @@ export function useAlgorithm<
   })
 
   const steps = React.useMemo(() => {
-    const recordedSteps: State[] = []
-    algorithm({ record: (data) => recordedSteps.push(data) }, inputs)
-    return recordedSteps
+    const snapshots = snapshot.createSnapshot()
+    algorithm(snapshots)(...inputs)
+
+    const last = snapshots.data[snapshots.data.length - 1]
+    if (last) {
+      last.__done = true
+    }
+
+    return snapshots.data
   }, [inputs, algorithm])
 
   useInterval(

@@ -2,12 +2,10 @@ import React from 'react'
 import clsx, { ClassValue } from 'clsx'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
-import { FaUndoAlt, FaCheck, FaTimes, FaCog } from 'react-icons/fa'
-import { RiPencilFill } from 'react-icons/ri'
+import { FaUndoAlt } from 'react-icons/fa'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 
 import { Button } from '~components/Button'
-import { Input } from '~components/Input'
 import { useAlgorithm } from '~lib/useAlgorithm'
 import { AlgorithmContext } from '~lib/types'
 
@@ -29,64 +27,13 @@ export function Algorithm({ children, algorithm, inputs, ...opts }) {
 
 type ControlsProps = {
   context: AlgorithmContext
-  serialize?: (key: string, val: unknown) => readonly [string, string]
-  unserialize?: (key: string, val: string) => readonly [string, unknown]
   className?: ClassValue
-}
-
-const forms = {
-  Inputs: 'inputs',
-  Settings: 'settings',
-} as const
-
-function defaultSerializer(key: string, val: unknown) {
-  return [key, JSON.stringify(val)] as const
-}
-
-function defaultUnserializer(key: string, val: string) {
-  return [key, val.length && JSON.parse(val)] as const
 }
 
 function Controls({
   context: { actions, models },
-  serialize = defaultSerializer,
-  unserialize = defaultUnserializer,
   className = '',
 }: ControlsProps) {
-  const [editing, setEditing] = React.useState(null)
-  const [inputs, setInputs] = React.useState({})
-
-  const save = () => {
-    const newInputs = Object.fromEntries(
-      Object.entries(inputs).map(([name, value]: [string, string]) =>
-        unserialize(name, value)
-      )
-    )
-    actions.reset()
-    editing === forms.Inputs
-      ? actions.setInputs(newInputs)
-      : actions.setSettings(newInputs)
-    setEditing(null)
-  }
-
-  const toggle = (form: 'inputs' | 'settings') => {
-    if (editing === null) {
-      setEditing(form)
-    } else {
-      setEditing(null)
-    }
-    const editableInputs = Object.fromEntries(
-      Object.entries(
-        form === forms.Inputs ? models.inputs : models.settings
-      ).map(([name, value]) =>
-        form === forms.Inputs
-          ? serialize(name, value)
-          : [name, JSON.stringify(value)]
-      )
-    )
-    setInputs(editableInputs)
-  }
-
   return (
     <motion.div layout className="px-4 xl:px-0">
       <motion.section
@@ -106,20 +53,6 @@ function Controls({
         </Button>
         <Button className="mr-2" onClick={actions.reset} title="Reset">
           <FaUndoAlt />
-        </Button>
-        <Button
-          className="mr-2"
-          onClick={() => (editing ? save() : toggle(forms.Inputs))}
-          title={editing ? 'Save' : 'Edit inputs'}
-        >
-          {editing ? <FaCheck /> : <RiPencilFill size="1.2em" />}
-        </Button>
-        <Button
-          className="mr-2"
-          onClick={() => (editing ? save() : toggle(forms.Settings))}
-          title={editing ? 'Cancel' : 'Animation settings'}
-        >
-          {editing ? <FaTimes /> : <FaCog />}
         </Button>
         <section
           className={clsx(
@@ -146,20 +79,6 @@ function Controls({
           </Button>
         </section>
       </motion.section>
-      {editing !== null && (
-        <motion.form layout className="mt-4 flex" onSubmit={save}>
-          {Object.entries(inputs).map(([name, value]) => (
-            <Input
-              key={name}
-              label={name}
-              value={value}
-              onChange={(evt) =>
-                setInputs({ ...inputs, [name]: evt.target.value })
-              }
-            />
-          ))}
-        </motion.form>
-      )}
     </motion.div>
   )
 }

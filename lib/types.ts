@@ -1,26 +1,3 @@
-export type Recorder<State = unknown> = {
-  record: (data: Partial<State>) => void
-}
-
-export type RecordableFunction<
-  Params extends Record<string, unknown> = Record<string, unknown>,
-  State = unknown
-> = (recorder: Recorder<State>, args: Params) => unknown
-
-export type Params<Func> = Func extends RecordableFunction<infer Params>
-  ? Params
-  : Record<string, unknown>
-
-export type DisplayProps<T> = T extends RecordableFunction<
-  infer Params,
-  infer State
->
-  ? {
-      state: Partial<State>
-      inputs: Params
-    }
-  : unknown
-
 export type Settings = {
   /**
    * Determines the running speed of the animation. This number is passed directly
@@ -53,10 +30,7 @@ export type Snapshot<Parameters, State> = {
   settings: Settings
 }
 
-export type AlgorithmContext<
-  Parameters = Record<string, unknown>,
-  State = unknown
-> = {
+export type AlgorithmContext<Parameters = unknown[], State = unknown> = {
   models: Snapshot<Parameters, State>
   actions: {
     /**
