@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Iterable, IterableItem } from '~components/Iterable'
 import defineAlgorithm from '~lib/defineAlgorithm'
-import { addIds } from '~utils/helpers'
+import { addIds, sum } from '~utils/helpers'
 import snapshot from '../../../lib/snapshot.macro'
 
 export default defineAlgorithm(
@@ -59,7 +59,6 @@ export default defineAlgorithm(
 
         for (const [head, tail] of pairs) {
           result.push([target, nums[head].val, nums[tail].val])
-          debugger
         }
       }
       debugger
@@ -78,6 +77,11 @@ function TripleSumToZero({ state }) {
     done || active || [curr, head, tail].includes(index)
   const showPointer = (index: number) => !done && !active && isActive(index)
 
+  const activeItems = nums
+    .filter((_, index) => isActive(index))
+    .map((item) => item.val)
+  const match = activeItems.length === 3 && sum(activeItems) === 0
+
   return (
     <>
       <section>
@@ -86,7 +90,7 @@ function TripleSumToZero({ state }) {
             <IterableItem
               key={item.id}
               active={isActive(index)}
-              className={{ result: done }}
+              className={{ result: done, 'bg-ok': isActive(index) && match }}
               pointer={showPointer(index)}
             >
               {item.val}

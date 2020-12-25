@@ -14,6 +14,7 @@ const theme2 = {
   highlight: '#8bd3dd',
   secondary: '#fef6e4',
   tertiary: '#e53170',
+  ok: '#60D394',
 }
 
 module.exports = {

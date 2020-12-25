@@ -12,3 +12,7 @@ export function addIds<T>(arr: T[]): IdWrapper<T>[] {
 export function identity<T>(item: T): T {
   return item
 }
+
+export function sum(nums: number[]): number {
+  return nums.reduce((currSum, num) => currSum + num, 0)
+}
