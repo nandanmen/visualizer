@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Algorithm } from '~components/Algorithm'
-import { AlgorithmPage } from '~components/AlgorithmPage'
 
 export default function defineAlgorithm(
   options: any,
@@ -10,11 +9,15 @@ export default function defineAlgorithm(
   const { title, pattern, description, algorithm, inputs } = options
   const Page = function () {
     return (
-      <AlgorithmPage title={title} pattern={pattern} description={description}>
-        <Algorithm algorithm={algorithm.entryPoint} inputs={inputs}>
-          <Component />
-        </Algorithm>
-      </AlgorithmPage>
+      <Algorithm
+        algorithm={algorithm}
+        inputs={inputs}
+        title={title}
+        description={description}
+        pattern={pattern}
+      >
+        <Component />
+      </Algorithm>
     )
   }
   Page.displayName = `${Component.name}Page`

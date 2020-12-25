@@ -17,6 +17,7 @@ export default defineAlgorithm(
         if (arr[i] !== arr[i - 1]) {
           result.push(arr[i])
         }
+
         debugger
       }
 

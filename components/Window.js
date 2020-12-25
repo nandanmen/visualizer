@@ -22,7 +22,7 @@ export function Window({ show, start, end }) {
           initial={{ opacity: 0, y: -80 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -80 }}
-          className="border-stroke border-3 bg-secondary h-32 absolute rounded-lg z-10"
+          className="border-stroke border-3 bg-white h-32 absolute rounded-lg z-10"
           layout
         />
       )}

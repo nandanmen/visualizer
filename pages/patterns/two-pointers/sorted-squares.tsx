@@ -15,7 +15,6 @@ export default defineAlgorithm(
     algorithm: snapshot((arr: number[]) => {
       const withIds = addIds(arr)
       let result = []
-
       let head = 0
       let tail = arr.length - 1
 

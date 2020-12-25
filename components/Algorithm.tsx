@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx, { ClassValue } from 'clsx'
-import { motion, AnimateSharedLayout } from 'framer-motion'
+import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion'
 import { BsFillPlayFill, BsPauseFill } from 'react-icons/bs'
 import { FaUndoAlt } from 'react-icons/fa'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
@@ -11,15 +11,100 @@ import { AlgorithmContext } from '~lib/types'
 
 import styles from './styles/Algorithm.module.scss'
 
-export function Algorithm({ children, algorithm, inputs, ...opts }) {
-  const context = useAlgorithm(algorithm, inputs)
+export function Algorithm({
+  children,
+  algorithm,
+  inputs,
+  title,
+  pattern,
+  description,
+}) {
+  const [showCode, toggleCode] = React.useReducer((show) => !show, false)
+
+  const { entryPoint, params, code } = algorithm
+  const context = useAlgorithm(entryPoint, inputs)
   return (
-    <AnimateSharedLayout>
-      <Algorithm.Controls context={context} {...opts} />
-      <Algorithm.Display>
-        {React.cloneElement(React.Children.only(children), context.models)}
-      </Algorithm.Display>
-    </AnimateSharedLayout>
+    <main
+      style={{ gridTemplateColumns: 'minmax(0, 2fr) 3fr' }}
+      className="h-screen w-screen grid antialiased"
+    >
+      <section className="flex flex-col justify-center items-end p-16 relative">
+        <article className="max-w-md">
+          <p className="text-gray-500 font-mono mb-2">{pattern}</p>
+          <h1
+            style={{ lineHeight: 1.1 }}
+            className="font-serif text-5xl font-bold mb-8"
+          >
+            {title}
+          </h1>
+          <p className="mb-4">{description}</p>
+          <form className="w-full">
+            {JSON.parse(params).map((paramName, index) => (
+              <label key={paramName} className="block font-mono w-full mb-2">
+                {paramName}
+                <input
+                  className="w-full block border-3 border-black rounded-lg p-2"
+                  type="text"
+                  value={JSON.stringify(context.models.inputs[index])}
+                />
+              </label>
+            ))}
+            <button className="bg-gray-300 rounded-lg w-full p-2 font-bold mt-4">
+              Update
+            </button>
+          </form>
+        </article>
+        <button onClick={toggleCode}>Show code</button>
+        <AnimatePresence>
+          {showCode && (
+            <motion.section
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ duration: 0.2 }}
+              className="absolute w-full h-full left-0 bg-white px-4 py-20 flex items-center justify-center"
+            >
+              <button
+                className="absolute top-0 left-0 m-4 text-lg bg-none rounded-full w-12 h-12 flex items-center justify-center border-3 border-black"
+                onClick={toggleCode}
+              >
+                <BiLeftArrowAlt size="1.5em" />
+              </button>
+              <pre
+                style={{ fontSize: '12px' }}
+                className="w-full p-4 bg-gray-200 rounded-lg  max-h-full overflow-scroll relative"
+              >
+                <motion.div
+                  layout
+                  style={{
+                    height: '19.2px',
+                    top: 16 + 19.2 * context.models.state.line,
+                  }}
+                  className="absolute w-full bg-gray-500 opacity-25 left-0"
+                ></motion.div>
+                <code>{code}</code>
+              </pre>
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </section>
+      <section className="bg-gray-200 relative">
+        <AnimateSharedLayout>
+          <motion.section
+            className="w-full h-full flex flex-col items-center justify-center "
+            id="display"
+            layout
+          >
+            {React.cloneElement(React.Children.only(children), context.models)}
+          </motion.section>
+        </AnimateSharedLayout>
+        <Controls
+          style={{ top: '50%', transform: 'translateY(-50%)' }}
+          context={context}
+          className="absolute left-0 ml-6"
+        />
+      </section>
+    </main>
   )
 }
 
@@ -28,81 +113,32 @@ export function Algorithm({ children, algorithm, inputs, ...opts }) {
 type ControlsProps = {
   context: AlgorithmContext
   className?: ClassValue
+  style: any
 }
 
 function Controls({
   context: { actions, models },
   className = '',
+  style,
 }: ControlsProps) {
   return (
-    <motion.div layout className="px-4 xl:px-0">
-      <motion.section
-        layout
-        className={clsx('flex text-sm lg:text-base', className)}
-      >
-        <Button
-          className="mr-2"
-          onClick={actions.toggle}
-          title="Start animation"
-        >
-          {models.isPlaying ? (
-            <BsPauseFill size="1.5em" />
-          ) : (
-            <BsFillPlayFill size="1.5em" />
-          )}
-        </Button>
-        <Button className="mr-2" onClick={actions.reset} title="Reset">
-          <FaUndoAlt />
-        </Button>
-        <section
-          className={clsx(
-            styles.stepper,
-            'flex flex-grow items-center justify-end lg:ml-auto'
-          )}
-        >
-          <Button
-            className={styles.prev}
-            onClick={actions.prev}
-            title="Previous step"
-          >
-            <BiLeftArrowAlt size="1.5em" />
-          </Button>
-          <p className={clsx(styles.text, 'font-mono')}>
-            {models.steps.indexOf(models.state) + 1} / {models.steps.length}
-          </p>
-          <Button
-            className={clsx(styles.next, 'ml-2')}
-            onClick={actions.next}
-            title="Next step"
-          >
-            <BiRightArrowAlt size="1.5em" />
-          </Button>
-        </section>
-      </motion.section>
-    </motion.div>
+    <section className={clsx(className)} style={style}>
+      <Button className="mb-2" onClick={actions.toggle} title="Start animation">
+        {models.isPlaying ? (
+          <BsPauseFill size="1.5em" />
+        ) : (
+          <BsFillPlayFill size="1.5em" />
+        )}
+      </Button>
+      <Button className="mb-2" onClick={actions.reset} title="Reset">
+        <FaUndoAlt />
+      </Button>
+      <Button className="mb-2" onClick={actions.prev} title="Previous step">
+        <BiLeftArrowAlt size="1.5em" />
+      </Button>
+      <Button className="mb-2" onClick={actions.next} title="Next step">
+        <BiRightArrowAlt size="1.5em" />
+      </Button>
+    </section>
   )
 }
-
-// ---
-
-function Display({ children, className = 'mt-4' }) {
-  return (
-    <motion.section
-      id="display"
-      className={clsx(
-        styles.display,
-        'px-4 py-6 text-sm border-t-4 border-b-4 flex flex-col items-start font-mono bg-background border-stroke z-0 overflow-x-scroll',
-        'md:text-base md:border-4 md:rounded-md md:p-16 md:items-center md:overflow-hidden',
-        className
-      )}
-      layout
-    >
-      {children}
-    </motion.section>
-  )
-}
-
-// ---
-
-Algorithm.Controls = Controls
-Algorithm.Display = Display

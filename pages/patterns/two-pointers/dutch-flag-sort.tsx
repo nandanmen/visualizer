@@ -19,19 +19,20 @@ export default defineAlgorithm(
       }
 
       const nums = addIds(arr)
-
       let low = 0
       let high = arr.length - 1
-
       let curr = 0
+
       while (curr <= high) {
         const num = nums[curr].val
         debugger
+
         if (num === 0) {
           if (curr !== low) {
             swap(nums, curr, low)
             debugger
           }
+
           curr++
           low++
         } else if (num === 1) {

@@ -12,12 +12,11 @@ export default defineAlgorithm(
     description: 'Given an array, find all triplets that add up to zero.',
     algorithm: snapshot((arr: number[]) => {
       const nums = addIds(arr)
-
       debugger
       nums.sort((a, b) => a.val - b.val)
       debugger
-
       const result = []
+
       for (let i = 0; i < nums.length - 2; i++) {
         const target = nums[i].val
         debugger
@@ -34,8 +33,8 @@ export default defineAlgorithm(
         while (head < tail) {
           const headNum = nums[head].val
           const tailNum = nums[tail].val
-
           debugger
+
           if (headNum + tailNum === currTarget) {
             pairs.push([head, tail])
             head++
@@ -61,6 +60,7 @@ export default defineAlgorithm(
           result.push([target, nums[head].val, nums[tail].val])
         }
       }
+
       debugger
       return result
     }),

@@ -13,24 +13,20 @@ export default defineAlgorithm(
       'Given an array and a target number, find the triple whose sum is closest to the given target.',
     algorithm: snapshot((arr: number[], target: number) => {
       const nums = addIds(arr)
-
       debugger
       nums.sort((a, b) => a.val - b.val)
       debugger
-
       let minDiff = Number.POSITIVE_INFINITY
       let minTriple = null
+
       for (let i = 0; i < nums.length - 2; i++) {
         const curr = nums[i].val
-
         debugger
-
         let head = i + 1
         let tail = nums.length - 1
 
         while (head < tail) {
           const diff = target - (curr + nums[head].val + nums[tail].val)
-
           debugger
 
           if (diff === 0) {
@@ -43,7 +39,6 @@ export default defineAlgorithm(
             minTriple = [i, head, tail]
           }
 
-          // If equal, prefer the positive diff because triple sum is smaller
           if (Math.abs(minDiff) === Math.abs(diff) && Math.sign(diff) > 0) {
             minDiff = diff
             minTriple = [i, head, tail]
