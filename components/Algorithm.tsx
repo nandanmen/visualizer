@@ -23,11 +23,10 @@ export function Algorithm({
 
   const { entryPoint, params, code } = algorithm
   const context = useAlgorithm(entryPoint, inputs)
+
+  const paramList = JSON.parse(params) as string[]
   return (
-    <main
-      style={{ gridTemplateColumns: 'minmax(0, 2fr) 3fr' }}
-      className="h-screen w-screen grid antialiased"
-    >
+    <main className={clsx('h-screen w-screen grid antialiased', styles.main)}>
       <section className="flex flex-col justify-center items-end p-16 relative">
         <article className="max-w-md">
           <p className="text-gray-500 font-mono mb-2">{pattern}</p>
@@ -39,13 +38,13 @@ export function Algorithm({
           </h1>
           <p className="mb-4">{description}</p>
           <form className="w-full">
-            {JSON.parse(params).map((paramName, index) => (
+            {paramList.map((paramName, index) => (
               <label key={paramName} className="block font-mono w-full mb-2">
                 {paramName}
                 <input
                   className="w-full block border-3 border-black rounded-lg p-2"
                   type="text"
-                  value={JSON.stringify(context.models.inputs[index])}
+                  defaultValue={JSON.stringify(context.models.inputs[index])}
                 />
               </label>
             ))}
@@ -54,7 +53,12 @@ export function Algorithm({
             </button>
           </form>
         </article>
-        <button onClick={toggleCode}>Show code</button>
+        <button
+          className="text-gray-500 font-mono hover:text-black"
+          onClick={toggleCode}
+        >
+          Show code
+        </button>
         <AnimatePresence>
           {showCode && (
             <motion.section
@@ -62,7 +66,7 @@ export function Algorithm({
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ duration: 0.2 }}
-              className="absolute w-full h-full left-0 bg-white px-4 py-20 flex items-center justify-center"
+              className="absolute w-full h-full left-0 bg-white px-16 py-20 flex items-center justify-center"
             >
               <button
                 className="absolute top-0 left-0 m-4 text-lg bg-none rounded-full w-12 h-12 flex items-center justify-center border-3 border-black"
@@ -72,7 +76,7 @@ export function Algorithm({
               </button>
               <pre
                 style={{ fontSize: '12px' }}
-                className="w-full p-4 bg-gray-200 rounded-lg  max-h-full overflow-scroll relative"
+                className="w-full p-4 bg-gray-200 rounded-lg  max-h-full overflow-scroll relative language-javascript"
               >
                 <motion.div
                   layout
@@ -82,13 +86,17 @@ export function Algorithm({
                   }}
                   className="absolute w-full bg-gray-500 opacity-25 left-0"
                 ></motion.div>
-                <code>{code}</code>
+                <code className="language-javascript">{code}</code>
               </pre>
             </motion.section>
           )}
         </AnimatePresence>
       </section>
       <section className="bg-gray-200 relative">
+        <p className="absolute top-0 left-0 m-6 font-mono">
+          {context.models.steps.indexOf(context.models.state) + 1} /{' '}
+          {context.models.steps.length}
+        </p>
         <AnimateSharedLayout>
           <motion.section
             className="w-full h-full flex flex-col items-center justify-center "

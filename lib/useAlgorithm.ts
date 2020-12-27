@@ -11,10 +11,10 @@ const clone = rfdc()
  * Given an algorithm and arguments, this hook runs the algorithm with the given
  * arguments and returns a series of algorithm "states" and animation controls.
  */
-export function useAlgorithm<State = unknown>(
+export function useAlgorithm(
   algorithm: any,
   initialArguments: any[]
-): AlgorithmContext<any[], State> {
+): AlgorithmContext {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [inputs, setInputs] = React.useState(clone(initialArguments))

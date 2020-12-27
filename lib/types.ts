@@ -30,7 +30,15 @@ export type Snapshot<Parameters, State> = {
   settings: Settings
 }
 
-export type AlgorithmContext<Parameters = unknown[], State = unknown> = {
+type BaseState = {
+  line: number
+  [variable: string]: unknown
+}
+
+export type AlgorithmContext<
+  Parameters = unknown[],
+  State extends BaseState = BaseState
+> = {
   models: Snapshot<Parameters, State>
   actions: {
     /**
