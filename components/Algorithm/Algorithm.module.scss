@@ -1,0 +1,8 @@
+.main {
+  grid-template-columns: minmax(0, 3fr) 4fr;
+}
+
+.controls {
+  top: 50%;
+  transform: translateY(-50%);
+}

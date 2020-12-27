@@ -5,6 +5,26 @@ import { Window } from '~components/Window'
 import defineAlgorithm from '~lib/defineAlgorithm'
 import snapshot from '../../../lib/snapshot.macro'
 
+const findAllAverages = snapshot((arr: number[], k: number) => {
+  const result = []
+  let windowStart = 0
+  let windowSum = 0
+
+  for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+    windowSum += arr[windowEnd]
+    debugger
+
+    if (windowEnd >= k - 1) {
+      result.push((windowSum / k).toFixed(2))
+      windowSum -= arr[windowStart]
+      windowStart++
+    }
+  }
+
+  debugger
+  return result
+})
+
 export default defineAlgorithm(
   {
     title: 'Find All Averages',
@@ -12,25 +32,7 @@ export default defineAlgorithm(
     description:
       'Given an array, find the averages of all subarrays of size k.',
     inputs: [[1, 3, 2, 6, -1, 4, 1, 8, 2], 3],
-    algorithm: snapshot((arr: number[], k: number) => {
-      const result = []
-      let windowStart = 0
-      let windowSum = 0
-
-      for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
-        windowSum += arr[windowEnd]
-        debugger
-
-        if (windowEnd >= k - 1) {
-          result.push((windowSum / k).toFixed(2))
-          windowSum -= arr[windowStart]
-          windowStart++
-        }
-      }
-
-      debugger
-      return result
-    }),
+    algorithm: findAllAverages,
   },
   function FindAllAverages({ state, inputs }) {
     const { __done: done, windowStart, windowEnd, result } = state

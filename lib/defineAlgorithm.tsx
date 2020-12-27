@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Algorithm } from '~components/Algorithm'
+import Algorithm from '~components/Algorithm'
 
 export default function defineAlgorithm(
   options: any,
