@@ -45,14 +45,14 @@ export default function SourceCode({
         <BiLeftArrowAlt size="1.5em" />
       </button>
       <pre
-        style={{ fontSize: '12px' }}
-        className="w-full p-4 bg-gray-200 rounded-lg  max-h-full overflow-scroll relative language-javascript"
+        style={{ fontSize: '14px' }}
+        className="w-full p-4 bg-gray-200 border-3 rounded-lg  max-h-full overflow-scroll relative language-javascript"
       >
         <motion.div
           layout
           style={{
-            height: '19.2px',
-            top: 16 + 19.2 * activeLine,
+            height: '22.4px',
+            top: 16 + 22.4 * activeLine,
           }}
           className="absolute w-full bg-gray-500 opacity-25 left-0"
         ></motion.div>

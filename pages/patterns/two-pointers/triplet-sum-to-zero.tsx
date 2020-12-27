@@ -5,65 +5,67 @@ import defineAlgorithm from '~lib/defineAlgorithm'
 import { addIds, sum } from '~utils/helpers'
 import snapshot from '../../../lib/snapshot.macro'
 
+const tripleSumToZero = snapshot((arr: number[]) => {
+  const nums = addIds(arr)
+  debugger
+  nums.sort((a, b) => a.val - b.val)
+  debugger
+  const result = []
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    const target = nums[i].val
+    debugger
+
+    if (i > 0 && target === nums[i - 1].val) {
+      continue
+    }
+
+    const pairs = []
+    const currTarget = -target
+    let head = i + 1
+    let tail = nums.length - 1
+
+    while (head < tail) {
+      const headNum = nums[head].val
+      const tailNum = nums[tail].val
+      debugger
+
+      if (headNum + tailNum === currTarget) {
+        pairs.push([head, tail])
+        head++
+        tail--
+
+        while (head < tail && nums[head].val === nums[head - 1].val) {
+          debugger
+          head++
+        }
+
+        while (head < tail && nums[tail].val === nums[tail + 1].val) {
+          debugger
+          tail--
+        }
+      } else if (headNum + tailNum > currTarget) {
+        tail--
+      } else {
+        head++
+      }
+    }
+
+    for (const [head, tail] of pairs) {
+      result.push([target, nums[head].val, nums[tail].val])
+    }
+  }
+
+  debugger
+  return result
+})
+
 export default defineAlgorithm(
   {
     title: 'Triplet Sum to Zero',
     pattern: 'Two Pointers',
     description: 'Given an array, find all triplets that add up to zero.',
-    algorithm: snapshot((arr: number[]) => {
-      const nums = addIds(arr)
-      debugger
-      nums.sort((a, b) => a.val - b.val)
-      debugger
-      const result = []
-
-      for (let i = 0; i < nums.length - 2; i++) {
-        const target = nums[i].val
-        debugger
-
-        if (i > 0 && target === nums[i - 1].val) {
-          continue
-        }
-
-        const pairs = []
-        const currTarget = -target
-        let head = i + 1
-        let tail = nums.length - 1
-
-        while (head < tail) {
-          const headNum = nums[head].val
-          const tailNum = nums[tail].val
-          debugger
-
-          if (headNum + tailNum === currTarget) {
-            pairs.push([head, tail])
-            head++
-            tail--
-
-            while (head < tail && nums[head].val === nums[head - 1].val) {
-              debugger
-              head++
-            }
-
-            while (head < tail && nums[tail].val === nums[tail + 1].val) {
-              debugger
-              tail--
-            }
-          } else if (headNum + tailNum > currTarget) {
-            tail--
-          } else {
-            head++
-          }
-        }
-
-        for (const [head, tail] of pairs) {
-          result.push([target, nums[head].val, nums[tail].val])
-        }
-      }
-
-      debugger
-      return result
-    }),
+    algorithm: tripleSumToZero,
     inputs: [[-3, 0, 1, 2, -1, 1, -2]],
   },
   TripleSumToZero
