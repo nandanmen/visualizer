@@ -4,10 +4,15 @@ import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion'
 import { BiLeftArrowAlt } from 'react-icons/bi'
 
 import { useAlgorithm } from '~lib/useAlgorithm'
+import type { AlgorithmOptions } from '~lib/defineAlgorithm'
 
 import styles from './Algorithm.module.scss'
 import ArgumentForm from './ArgumentForm'
 import Controls from './Controls'
+
+export type AlgorithmProps = AlgorithmOptions & {
+  children: React.ReactElement
+}
 
 export default function Algorithm({
   children,
@@ -16,7 +21,7 @@ export default function Algorithm({
   title,
   pattern,
   description,
-}) {
+}: AlgorithmProps) {
   const [showCode, toggleCode] = React.useReducer((show) => !show, false)
   const { entryPoint, params, code } = algorithm
   const context = useAlgorithm(entryPoint, inputs)

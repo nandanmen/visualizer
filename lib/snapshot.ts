@@ -1,14 +1,10 @@
 import rfdc from 'rfdc'
-
-export type Snapshot<T = unknown> = {
-  data: Partial<T>[]
-  push(val: Partial<T>): void
-}
+import type { Snapshot } from './snapshot.macro'
 
 const clone = rfdc()
 
 const snapshot = {
-  createSnapshot() {
+  createSnapshot(): Snapshot {
     const data = []
     return {
       data,

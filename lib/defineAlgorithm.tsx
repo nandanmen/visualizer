@@ -1,21 +1,23 @@
 import React from 'react'
 
 import Algorithm from '~components/Algorithm'
+import type { Recordable } from './snapshot.macro'
+
+export type AlgorithmOptions = {
+  title: string
+  pattern: string
+  description: string
+  algorithm: Recordable
+  inputs: unknown[]
+}
 
 export default function defineAlgorithm(
-  options: any,
+  options: AlgorithmOptions,
   Component: (props: unknown) => JSX.Element
 ) {
-  const { title, pattern, description, algorithm, inputs } = options
   const Page = function () {
     return (
-      <Algorithm
-        algorithm={algorithm}
-        inputs={inputs}
-        title={title}
-        description={description}
-        pattern={pattern}
-      >
+      <Algorithm {...options}>
         <Component />
       </Algorithm>
     )
