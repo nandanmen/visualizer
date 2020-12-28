@@ -6,7 +6,35 @@ export type Settings = {
   delay: number
 }
 
-export type Snapshot<Parameters, State> = {
+export type EntryFunction = (
+  snapshot: Snapshotter
+) => (...args: unknown[]) => unknown
+
+export type EntryArguments<T> = T extends (
+  snapshot: Snapshotter
+) => (...args: infer Params) => unknown
+  ? Params
+  : unknown[]
+
+export type Recordable = {
+  entryPoint: EntryFunction
+  params: string
+  code: string
+}
+
+export type Snapshotter = {
+  data: State[]
+  push(val: Omit<State, 'line' | '__done' | '__returnValue'>): void
+}
+
+export type State = {
+  line: number
+  __done: boolean
+  __returnValue: unknown
+  [variable: string]: unknown
+}
+
+export type Snapshot<Parameters> = {
   /**
    * A snapshot of the current state of the algorithm. Typically represents the
    * value of specific variables at a particular point in time.
@@ -30,16 +58,8 @@ export type Snapshot<Parameters, State> = {
   settings: Settings
 }
 
-type BaseState = {
-  line: number
-  [variable: string]: unknown
-}
-
-export type AlgorithmContext<
-  Parameters = unknown[],
-  State extends BaseState = BaseState
-> = {
-  models: Snapshot<Parameters, State>
+export type AlgorithmContext<Parameters = unknown[]> = {
+  models: Snapshot<Parameters>
   actions: {
     /**
      * Set arguments for the algorithm. Triggers a re-run of the algorithm, in turn

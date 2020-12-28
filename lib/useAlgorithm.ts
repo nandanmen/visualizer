@@ -2,7 +2,12 @@ import React from 'react'
 import useInterval from '@use-it/interval'
 import rfdc from 'rfdc'
 
-import { AlgorithmContext, Settings } from './types'
+import type {
+  EntryFunction,
+  EntryArguments,
+  AlgorithmContext,
+  Settings,
+} from './types'
 import snapshot from './snapshot'
 
 const clone = rfdc()
@@ -11,10 +16,10 @@ const clone = rfdc()
  * Given an algorithm and arguments, this hook runs the algorithm with the given
  * arguments and returns a series of algorithm "states" and animation controls.
  */
-export function useAlgorithm(
-  algorithm: any,
-  initialArguments: any[]
-): AlgorithmContext {
+export function useAlgorithm<T extends EntryFunction = EntryFunction>(
+  algorithm: T,
+  initialArguments: EntryArguments<T>
+): AlgorithmContext<EntryArguments<T>> {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [inputs, setInputs] = React.useState(clone(initialArguments))

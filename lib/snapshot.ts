@@ -1,10 +1,10 @@
 import rfdc from 'rfdc'
-import type { Snapshot } from './snapshot.macro'
+import type { Snapshotter } from './types'
 
 const clone = rfdc()
 
 const snapshot = {
-  createSnapshot(): Snapshot {
+  createSnapshot(): Snapshotter {
     const data = []
     return {
       data,

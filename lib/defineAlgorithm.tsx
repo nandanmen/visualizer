@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Algorithm from '~components/Algorithm'
-import type { Recordable } from './snapshot.macro'
+import type { Recordable } from './types'
 
 export type AlgorithmOptions = {
   title: string
