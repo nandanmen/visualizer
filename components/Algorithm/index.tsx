@@ -2,6 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion'
 import { BiLeftArrowAlt } from 'react-icons/bi'
+import Highlight, { defaultProps } from 'prism-react-renderer'
 
 import { useAlgorithm } from '~lib/useAlgorithm'
 import type { AlgorithmOptions } from '~lib/defineAlgorithm'
@@ -9,6 +10,7 @@ import type { AlgorithmOptions } from '~lib/defineAlgorithm'
 import styles from './Algorithm.module.scss'
 import ArgumentForm from './ArgumentForm'
 import Controls from './Controls'
+import CodeBlock from './CodeBlock'
 
 export type AlgorithmProps = AlgorithmOptions & {
   children: React.ReactElement
@@ -62,7 +64,7 @@ export default function Algorithm({
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ duration: 0.2 }}
-              className="absolute w-full h-full left-0 bg-white px-16 py-20 flex items-center justify-center"
+              className="absolute w-full h-full left-0 bg-white px-4 py-20 flex items-center justify-center"
             >
               <button
                 className="absolute top-0 left-0 m-4 text-lg bg-none rounded-full w-12 h-12 flex items-center justify-center border-3 border-black"
@@ -70,20 +72,10 @@ export default function Algorithm({
               >
                 <BiLeftArrowAlt size="1.5em" />
               </button>
-              <pre
-                style={{ fontSize: '12px' }}
-                className="w-full p-4 bg-gray-200 rounded-lg  max-h-full overflow-scroll relative language-javascript"
-              >
-                <motion.div
-                  layout
-                  style={{
-                    height: '19.2px',
-                    top: 16 + 19.2 * context.models.state.line,
-                  }}
-                  className="absolute w-full bg-gray-500 opacity-25 left-0"
-                ></motion.div>
-                <code className="language-javascript">{code}</code>
-              </pre>
+              <CodeBlock
+                code={code}
+                highlightLine={context.models.state.line}
+              />
             </motion.section>
           )}
         </AnimatePresence>

@@ -2,12 +2,8 @@ import React from 'react'
 import useInterval from '@use-it/interval'
 import rfdc from 'rfdc'
 
-import type {
-  EntryFunction,
-  EntryArguments,
-  AlgorithmContext,
-  Settings,
-} from './types'
+import type { EntryArguments, AlgorithmContext, Settings } from './types'
+import { EntryFunction } from './snapshot.macro'
 import snapshot from './snapshot'
 
 const clone = rfdc()

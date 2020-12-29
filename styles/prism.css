@@ -160,3 +160,7 @@ code[class*='language-css'] {
     rgba(221, 222, 241, 0)
   );
 }
+
+.token-line:not(:last-child) {
+  min-height: 22.4px;
+}

@@ -1,3 +1,5 @@
+import type { Snapshotter } from './snapshot.macro'
+
 export type Settings = {
   /**
    * Determines the running speed of the animation. This number is passed directly
@@ -6,26 +8,11 @@ export type Settings = {
   delay: number
 }
 
-export type EntryFunction = (
-  snapshot: Snapshotter
-) => (...args: unknown[]) => unknown
-
 export type EntryArguments<T> = T extends (
   snapshot: Snapshotter
 ) => (...args: infer Params) => unknown
   ? Params
   : unknown[]
-
-export type Recordable = {
-  entryPoint: EntryFunction
-  params: string
-  code: string
-}
-
-export type Snapshotter = {
-  data: State[]
-  push(val: Omit<State, 'line' | '__done' | '__returnValue'>): void
-}
 
 export type State = {
   line: number
