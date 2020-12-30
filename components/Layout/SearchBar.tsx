@@ -42,7 +42,7 @@ const allAlgorithms = patterns.flatMap((pattern) => pattern.algorithms)
 export default function SearchBar() {
   const router = useRouter()
 
-  const handleChange = (item) => {
+  const handleChange = (item: Algorithm) => {
     if (!item) {
       return
     }
