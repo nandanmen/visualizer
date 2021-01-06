@@ -10,7 +10,7 @@ const theme2 = {
 }
 
 module.exports = {
-  purge: [],
+  purge: ['./pages/**/*.tsx'],
   theme: {
     fontFamily: {
       serif: ['PT Serif', 'serif'],

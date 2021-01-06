@@ -1,5 +1,5 @@
 import rfdc from 'rfdc'
-import type { Snapshotter } from './types'
+import type { Snapshotter } from './snapshot.macro'
 
 const clone = rfdc()
 

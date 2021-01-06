@@ -5,6 +5,7 @@ import Downshift from 'downshift'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { matchSorter } from 'match-sorter'
+import clsx from 'clsx'
 
 type Algorithm = {
   name: string
@@ -39,7 +40,7 @@ const patterns = routes.map(([pattern, algorithms]) => ({
 
 const allAlgorithms = patterns.flatMap((pattern) => pattern.algorithms)
 
-export default function SearchBar() {
+export default function SearchBar({ className = '' }) {
   const router = useRouter()
 
   const handleChange = (item: Algorithm) => {
@@ -50,15 +51,16 @@ export default function SearchBar() {
     router.push(`/patterns/${pattern}/${link}`)
   }
 
+  const currentPath = format(getCurrentPath(router.pathname))
   return (
     <Downshift<Algorithm>
       onChange={handleChange}
       itemToString={(item) => (item ? item.name : '')}
+      initialInputValue={currentPath}
     >
       {({
         getInputProps,
         getItemProps,
-        getLabelProps,
         getMenuProps,
         isOpen,
         inputValue,
@@ -68,34 +70,42 @@ export default function SearchBar() {
       }) => {
         const visiblePatterns = getVisibleItems(inputValue)
         return (
-          <div>
-            <label {...getLabelProps()}>Enter an algorithm or pattern</label>
+          <div className={clsx('relative', className)}>
             <input
               {...getInputProps({
+                className:
+                  'w-full block border-3 border-black rounded-lg p-2 text-center',
                 onFocus: () => setState({ inputValue: '', isOpen: true }),
               })}
             />
-            <ul {...getMenuProps()}>
-              {isOpen
-                ? visiblePatterns.map(({ name, link, algorithms }) => (
+            <ul
+              {...getMenuProps({
+                className: clsx(
+                  "'absolute bg-white w-full shadow-md rounded-lg mt-1'",
+                  { 'p-6': isOpen, 'pt-4': isOpen && visiblePatterns.length }
+                ),
+              })}
+            >
+              {isOpen ? (
+                visiblePatterns.length ? (
+                  visiblePatterns.map(({ name, link, algorithms }) => (
                     <ul key={link}>
-                      {name}
+                      <p className="text-gray-500 font-mono my-2">{name}</p>
                       {algorithms.map((algo) => {
                         const index = allAlgorithms.indexOf(algo)
+                        const highlighted = highlightedIndex === index
+                        const selected =
+                          selectedItem === algo || algo.name === currentPath
                         return (
                           <li
                             {...getItemProps({
                               key: algo.name,
                               index,
                               item: algo,
-                              style: {
-                                backgroundColor:
-                                  highlightedIndex === index
-                                    ? 'lightgray'
-                                    : 'white',
-                                fontWeight:
-                                  selectedItem === algo ? 'bold' : 'normal',
-                              },
+                              className: clsx('-mx-2 px-2 rounded-sm', {
+                                'bg-blue-100': highlighted,
+                                'font-semibold': selected,
+                              }),
                             })}
                           >
                             <Link href={`/patterns/${link}/${algo.link}`}>
@@ -106,7 +116,12 @@ export default function SearchBar() {
                       })}
                     </ul>
                   ))
-                : null}
+                ) : (
+                  <p className="font-mono text-center text-gray-500">
+                    No algorithms found :-(
+                  </p>
+                )
+              ) : null}
             </ul>
           </div>
         )
@@ -118,12 +133,18 @@ export default function SearchBar() {
 // --
 
 function format(str: string) {
-  return str.split('-').join(' ')
+  const words = str.split('-')
+  return words.map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
+}
+
+function getCurrentPath(pathName: string) {
+  const words = pathName.split('/')
+  return words[words.length - 1]
 }
 
 function getVisibleItems(inputValue: string) {
   const matches = matchSorter(allAlgorithms, inputValue, {
-    keys: ['name', 'pattern'],
+    keys: ['name', (item) => format(item.pattern)],
   })
   return patterns
     .filter((pattern) =>

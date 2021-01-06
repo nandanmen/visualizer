@@ -60,8 +60,17 @@ export default defineAlgorithm(
   ClosestTriples
 )
 
-function ClosestTriples({ state, inputs }) {
-  const { __done: done, i, head, tail, minTriple, minDiff, diff } = state
+function ClosestTriples({ state }) {
+  const {
+    __done: done,
+    i,
+    head,
+    tail,
+    minTriple,
+    minDiff,
+    diff,
+    target,
+  } = state
 
   const active = !done && i === undefined
   const isActive = (index: number) =>
@@ -87,7 +96,7 @@ function ClosestTriples({ state, inputs }) {
         </Iterable>
       </section>
       <section className="mt-8 lg:text-center">
-        <code className="block">Target: {inputs.target}</code>
+        <code className="block">Target: {target}</code>
         <code className="block">Min diff: {minDiff}</code>
         <code className="block">Current diff: {diff}</code>
       </section>
