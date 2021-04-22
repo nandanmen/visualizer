@@ -2,12 +2,54 @@ import React from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { Iterable, IterableItem } from '~components/Iterable'
-import { makeAlgorithmPage } from '~lib/makeAlgorithmPage'
+import defineAlgorithm from '~lib/defineAlgorithm'
 import { addIds } from '~utils/helpers'
+import snapshot from '../../../lib/snapshot.macro'
+
+export default defineAlgorithm(
+  {
+    title: 'Sorted Squares',
+    pattern: 'Two Pointers',
+    description:
+      'Given a sorted array, return a sorted array of each element squared.',
+    algorithm: snapshot((arr: number[]) => {
+      const withIds = addIds(arr)
+      let result = []
+      let head = 0
+      let tail = arr.length - 1
+
+      while (head <= tail) {
+        const currHead = withIds[head]
+        const currTail = withIds[tail]
+
+        const headSquare = currHead.val * currHead.val
+        const tailSquare = currTail.val * currTail.val
+
+        debugger
+
+        if (headSquare < tailSquare) {
+          result.push({ val: tailSquare, id: currTail.id })
+          tail--
+        } else {
+          result.push({ val: headSquare, id: currHead.id })
+          head++
+        }
+      }
+
+      debugger
+      result = result.reverse()
+      debugger
+
+      return result
+    }),
+    inputs: [[-2, -1, 0, 2, 3]],
+  },
+  SortedSquares
+)
 
 function SortedSquares({ state, inputs }) {
-  const { done, head, tail, result } = state
-  const { arr } = inputs
+  const { __done: done, head, tail, result } = state
+  const [arr] = inputs
   const isActive = (index) => index === head || index === tail
 
   return (
@@ -48,20 +90,6 @@ function SortedSquares({ state, inputs }) {
   )
 }
 
-export default makeAlgorithmPage(
-  {
-    title: 'Sorted Squares',
-    pattern: 'Two Pointers',
-    description:
-      'Given a sorted array, return a sorted array of each element squared.',
-    algorithm: sortedSquare,
-    inputs: {
-      arr: [-2, -1, 0, 2, 3],
-    },
-  },
-  SortedSquares
-)
-
 // --
 
 // Uncomment this to use the non-optimal O(nlogn) version
@@ -84,46 +112,3 @@ export default makeAlgorithmPage(
 
   return squared
 } */
-
-function sortedSquare({ record }, { arr }) {
-  const withIds = addIds(arr)
-  const squares = []
-
-  let head = 0
-  let tail = arr.length - 1
-
-  while (head <= tail) {
-    const currHead = withIds[head]
-    const currTail = withIds[tail]
-
-    const headSquare = currHead.val * currHead.val
-    const tailSquare = currTail.val * currTail.val
-
-    record({
-      head,
-      tail,
-      result: [...squares],
-      done: false,
-    })
-
-    if (headSquare < tailSquare) {
-      squares.push({ val: tailSquare, id: currTail.id })
-      tail--
-    } else {
-      squares.push({ val: headSquare, id: currHead.id })
-      head++
-    }
-  }
-
-  record({
-    result: [...squares],
-    done: false,
-  })
-  const reversed = squares.reverse()
-  record({
-    result: [...squares],
-    done: true,
-  })
-
-  return reversed
-}

@@ -1,11 +1,3 @@
-const theme1 = {
-  stroke: '#001858',
-  main: '#f3d2c1',
-  highlight: '#fef6e4',
-  secondary: '#8bd3dd',
-  tertiary: '#f582ae',
-}
-
 const theme2 = {
   stroke: '#001858',
   main: '#fffffe',
@@ -14,12 +6,14 @@ const theme2 = {
   highlight: '#8bd3dd',
   secondary: '#fef6e4',
   tertiary: '#e53170',
+  ok: '#60D394',
 }
 
 module.exports = {
-  purge: [],
+  purge: ['./pages/**/*.tsx', './components/**/*'],
   theme: {
     fontFamily: {
+      serif: ['PT Serif', 'serif'],
       mono: ['SF Mono', 'Menlo', 'monospace'],
     },
     extend: {
